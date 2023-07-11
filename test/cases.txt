@@ -1,20 +1,24 @@
-# Booleans
+# Keywords
 
-#t
-#f
-
-==>
-
-Program(Boolean, Boolean)
-
-# Identifiers
-
-one
-Two_Three
+SUM
+IF
 
 ==>
 
-Program(Identifier, Identifier)
+NuFormula(Keyword, Keyword)
+
+# Operators
+
+<
+>
+<=
+>=
+=
+<>
+
+==>
+
+NuFormula(Operator, Operator, Operator, Operator, Operator, Operator)
 
 # Strings
 
@@ -23,19 +27,31 @@ Program(Identifier, Identifier)
 
 ==>
 
-Program(String, String)
+NuFormula(String, String)
 
-# Applications
+# Numbers
 
-(begin
-  (when #t
-    (print (concat "hello" " " "world")))
-  (print "DONE"))
+100
+-324
+0.345
 
 ==>
 
-Program(Application(
-  Identifier,
-  Application(Identifier, Boolean, Application(
-    Identifier, Application(Identifier, String, String, String)))
-  Application(Identifier, String)))
+NuFormula(Number, Number, Number)
+
+# VariableNames
+
+{aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa}
+
+==>
+
+NuFormula(VariableName)
+
+
+# Formula
+
+IF({aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa}="蘋果",CONCAT({aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa},"含稅的總價是$",{bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb}*{cccccccc-cccc-cccc-cccc-cccccccccccc}*1.1),"未註冊的商品")
+
+==>
+
+NuFormula(Keyword, Function(VariableName, Operator, String, Comma, Keyword, Function(VariableName, Comma, String, Comma, VariableName, Operator, VariableName, Operator, Number), Comma, String))

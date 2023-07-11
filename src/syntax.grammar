@@ -1,24 +1,37 @@
-@top Program { expression* }
+@top NuFormula { expression* }
 
-@skip { space | LineComment }
+@skip { whitespace }
 
 expression {
-  Identifier |
+  Operator |
+  Keyword |
   String |
-  Boolean |
-  Application { "(" expression* ")" }
+  Number |
+  VariableName |
+  Comma |
+  Function { "(" expression* ")" }
 }
 
 @tokens {
-  Identifier { $[a-zA-Z_\-0-9]+ }
 
-  String { '"' (!["\\] | "\\" _)* '"' }
+  Operator { $[+\-*/] | "<" | ">" | "<=" | ">=" | "=" | "<>" }
 
-  Boolean { "#t" | "#f" }
+  Keyword { @asciiUppercase+ }
 
-  LineComment { ";" ![\n]* }
+  String { '"' char* '"' }
+  char { $[\u{20}\u{21}\u{23}-\u{5b}\u{5d}-\u{10ffff}] | "\\" esc }
+  esc  { $["\\\/bfnrt] | "u" hex hex hex hex }
+  hex  { $[0-9a-fA-F] }
 
-  space { $[ \t\n\r]+ }
+  Number { ("+" | "-")? (@digit+ ("." @digit*)? | "." @digit+) }
+
+  @precedence { Number, Operator }
+
+  VariableName { "{" hex+ "-" hex+ "-" hex+ "-" hex+ "-" hex+ "}" }
+
+  whitespace { $[ \n\r\t] }
+
+  Comma { "," }
 
   "(" ")"
 }
