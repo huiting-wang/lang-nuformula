@@ -1,0 +1,57 @@
+# String
+
+"hello//"
+
+===> 
+
+NuFormula(String)
+
+
+# Number
+
+100.31
+
+===> 
+
+NuFormula(Number)
+
+
+# Item
+
+{aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa}
+
+===> 
+
+NuFormula(Item)
+
+# operations
+
+10*({aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa}+"這是一個字串")
+
+===> 
+
+NuFormula(Number,Operator,"(",Item,Operator,String,")")
+
+# IFfunction
+
+IF(10>40,"TRUE","FALSE")
+
+===> 
+
+NuFormula(Keyword, ArgList( Number, Operator, Number, Comma, String, Comma, String ))
+
+# SUMfunction
+
+SUM(100,{aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa})
+
+===> 
+
+NuFormula(Keyword, ArgList(Number, Comma, Item))
+
+# AVERAGEfunction
+
+AVERAGE(10*(100-{aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa})/100,IF(10>40,"TRUE","FALSE"))
+
+===> 
+
+NuFormula(Keyword, ArgList( Number, Operator, "(", Number, Operator, Item ")", Operator, Number, Comma, Keyword, ArgList( Number, Operator, Number, Comma, String, Comma, String )))

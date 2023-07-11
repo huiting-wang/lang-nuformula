@@ -1,20 +1,39 @@
-import { NuformulaLanguage } from "../dist/index.js";
+import { NuformulaLanguage, nuLint } from "../dist/index.js";
 import { fileTests } from "@lezer/generator/dist/test";
-
+import { fileURLToPath } from "url";
 import * as fs from "fs";
 import * as path from "path";
-import { fileURLToPath } from "url";
-let caseDir = path.dirname(fileURLToPath(import.meta.url));
+import * as assert from "assert";
 
-for (let file of fs.readdirSync(caseDir)) {
-  if (!/\.txt$/.test(file)) continue;
+// 測試 lezer grammar
+let languageTestCase = "language.txt";
+let languageTest = path.join(
+  path.dirname(fileURLToPath(import.meta.url)),
+  languageTestCase
+);
 
-  let name = /^[^\.]*/.exec(file)[0];
-  describe(name, () => {
-    for (let { name, run } of fileTests(
-      fs.readFileSync(path.join(caseDir, file), "utf8"),
-      file
-    ))
-      it(name, () => run(NuformulaLanguage.parser));
+describe("language", () => {
+  for (let { name, run } of fileTests(
+    fs.readFileSync(languageTest, "utf8"),
+    languageTestCase
+  ))
+    it(name, () => run(NuformulaLanguage.parser));
+});
+
+// 測試 linter
+const { default: linterTestCase } = await import("./linter.json", {
+  assert: { type: "json" },
+});
+describe("linter", () => {
+  Object.entries(linterTestCase).forEach(([name, cases]) => {
+    describe(name, () => {
+      cases.forEach((test) => {
+        const { text, result } = test;
+        it(text, () => {
+          const answer = nuLint.verify(text);
+          assert.equal(answer, result);
+        });
+      });
+    });
   });
-}
+});
