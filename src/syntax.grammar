@@ -1,16 +1,28 @@
-@top NuFormula { expression* }
+@precedence {
+  argument,
+  function,
+  commaSep,
+  String,
+  Operator,
+  valueOp @left
+}
+
+@top NuFormula { operand }
 
 @skip { whitespace }
 
-expression {
-  Operator |
-  Keyword |
-  String |
-  Number |
-  VariableName |
-  Comma |
-  Function { "(" expression* ")" }
+operand { 
+  String | 
+  Number | 
+  Item |
+  parenthesizedOperand { "(" operand ")" } |
+  operation { operand !valueOp Operator operand } |
+  function { Keyword  ArgList<operand> }
 }
+
+ArgList<content> { "(" commaSep<content> ")" }
+
+commaSep<value> { (value (Comma value)*)? }
 
 @tokens {
 
@@ -25,9 +37,9 @@ expression {
 
   Number { ("+" | "-")? (@digit+ ("." @digit*)? | "." @digit+) }
 
-  @precedence { Number, Operator }
+  @precedence { Operator, Number }
 
-  VariableName { "{" hex+ "-" hex+ "-" hex+ "-" hex+ "-" hex+ "}" }
+  Item { "{" hex+ "-" hex+ "-" hex+ "-" hex+ "-" hex+ "}" }
 
   whitespace { $[ \n\r\t] }
 
