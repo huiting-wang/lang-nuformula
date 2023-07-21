@@ -31,7 +31,7 @@ describe("linter", () => {
         const { text, result } = test;
         it(text, () => {
           const answer = nuLint.verify(text);
-          assert.equal(answer, result);
+          assert.equal(JSON.stringify(answer), JSON.stringify(result));
         });
       });
     });
