@@ -1,30 +1,35 @@
 import { linter, Diagnostic } from "@codemirror/lint";
-import { isEmptyValue, funcName } from "./utils";
+import { isEmptyValue } from "./utils";
 import { EditorView } from "@codemirror/view";
+import { funcName } from "./constants";
 
-type ErrorMessage = {
-  message: string;
-  pos: number;
-  length?: number;
-  text?: string;
-};
 
+// 函式參數紀錄物件格式
 type FuncArg = {
   name: string;
   argCount: number;
   pos: number;
 };
 
-const ERROR = {
-  unmatchedParen: "unmatchedParen", // -------- 括號不對稱
-  unmatchedQuote: "unmatchedQuote", // -------- 引號不對稱
-  invalidItem: "invalidItem", // -------------- 不合法的項目元件
-  invalidOperator: "invalidOperator", // ------ 錯誤的標示符
-  missingOperator: "missingOperator", // ------ 缺少標示符
-  invalidFuncName: "invalidFuncName", // ------ 錯誤的函式
-  invalidArgCount: "invalidArgCount", // ------ 錯誤的參數數量
-  syntaxError: "syntaxError", // -------------- 語法錯誤
+// 錯誤訊息物件格式
+type ErrorMessage = {
+  message: number;
+  pos: number;
+  length?: number;
+  text?: string;
 };
+
+
+enum ERROR {
+  unmatchedParen, // -------- 括號不對稱
+  unmatchedQuote, // -------- 引號不對稱
+  invalidItem, // ----------- 不合法的項目元件
+  invalidOperator, // ------ 錯誤的標示符
+  missingOperator, // ------ 缺少標示符
+  invalidFuncName, // ------ 錯誤的函式
+  invalidArgCount, // ------ 錯誤的參數數量
+  syntaxError, // -------------- 語法錯誤
+}
 
 const SYNTAX_empty = `^$`; // ----------------- 空字串
 const SYNTAX_comma = `(,)`; // ---------------- 逗號 ,
@@ -68,7 +73,7 @@ const SYNTAX_trail_to_arg = `(${SYNTAX_empty}|${SYNTAX_comma}|${SYNTAX_paren_r}|
 // 是否為一個函式的合法結尾
 const SYNTAX_end_of_func = `(${SYNTAX_upper_case}|${SYNTAX_paren_l})`;
 // 是否為註冊的函式
-const SYNTAX_valid_func = `(${Object.values(funcName).join("|")})`;
+const SYNTAX_valid_func = `(${Object.keys(funcName).join("|")})`;
 
 /**
  * 判斷字符類型
@@ -104,7 +109,7 @@ const isValidOperator = (prevChar: string, nextChar: string): boolean => {
  * @returns {boolean}
  */
 const isValidFuncArg = ({ name, argCount }: FuncArg): boolean => {
-  switch (name) {
+  switch (name.toLowerCase()) {
     case funcName.IF:
       return argCount === 3;
     case funcName.AVERAGE:
@@ -122,7 +127,7 @@ const isValidFuncArg = ({ name, argCount }: FuncArg): boolean => {
  */
 const throwError = (errorMessage: ErrorMessage) => {
   const { message, ...info } = errorMessage;
-  const error = new Error(message);
+  const error = new Error(ERROR[message]);
   throw Object.assign(error, info);
 };
 
@@ -164,9 +169,9 @@ class NuLinter {
    */
   reset(text = "") {
     // 公式字串
-    this.text = text as string;
+    this.text = text;
     // 公式字串長度
-    this.length = text.length as number;
+    this.length = text.length;
     // 前一字符、當前字符、表單元件項目、函式名稱
     this.prevChar = this.char = this.itemSn = this.funcName = "" as string;
     // 後一字符
@@ -303,11 +308,12 @@ class NuLinter {
   /**
    * 取得錯誤訊息
    *
+   * @internal
    * @param {ErrorMessage} error - 錯誤資訊
    * @returns {object}
    */
   private errorMsg(error: ErrorMessage) {
-    const { message: type, pos, length = 1, text } = error as ErrorMessage;
+    const { message: type, pos, length = 1, text } = error;
     const fromPos = (position: number): number =>
       position <= 0 ? 0 : position;
     const toPos = (position: number): number =>
@@ -393,6 +399,7 @@ class NuLinter {
   /**
    * 存在等待配對的引號
    *
+   * @internal
    * @param {number} pos - 字符位置
    */
   private waitForQuote(pos: number) {
@@ -408,6 +415,7 @@ class NuLinter {
   /**
    * 遇到尚未配對的引號
    *
+   * @internal
    * @param {number} pos - 字符位置
    */
   private meetQuote(pos: number) {
@@ -421,6 +429,7 @@ class NuLinter {
   /**
    * 遇到可配對的表單項目結尾 }
    *
+   * @internal
    * @param {number} pos - 字符位置
    */
   private meetEndOfItem(pos: number) {
@@ -445,6 +454,7 @@ class NuLinter {
   /**
    * 遇到表單項目開頭 {
    *
+   * @internal
    * @param {number} pos - 字符位置
    */
   private meetStartOfItem(pos: number) {
@@ -457,6 +467,7 @@ class NuLinter {
   /**
    * 存在等待配對的表單項目
    *
+   * @internal
    * @param {number} pos - 字符位置
    */
   private waitForItemEnd(pos: number) {
@@ -472,6 +483,7 @@ class NuLinter {
   /**
    * 遇到等待配對的括號 )
    *
+   * @internal
    * @param {number} pos - 字符位置
    */
   private meetRightParen(pos: number) {
@@ -497,6 +509,7 @@ class NuLinter {
   /**
    * 遇到尚未配對的括號 (
    *
+   * @internal
    * @param {number} pos - 字符位置
    */
   private meetLeftParen(pos: number) {
@@ -525,6 +538,7 @@ class NuLinter {
   /**
    * 遇到大寫字母
    *
+   * @internal
    * @param {number} pos - 字符位置
    */
   private meetUppercase(pos: number) {
@@ -537,6 +551,7 @@ class NuLinter {
   /**
    * 遇到數學符號 * | /
    *
+   * @internal
    * @param {number} pos - 字符位置
    */
   private meetArith(pos: number) {
@@ -547,6 +562,7 @@ class NuLinter {
   /**
    * 遇到正負號 + | -
    *
+   * @internal
    * @param {number} pos - 字符位置
    */
   private meetSign(pos: number) {
@@ -560,6 +576,7 @@ class NuLinter {
   /**
    * 遇到等於符號 =
    *
+   * @internal
    * @param {number} pos - 字符位置
    */
   private meetEqual(pos: number) {
@@ -581,6 +598,7 @@ class NuLinter {
   /**
    * 遇到大於符號 >
    *
+   * @internal
    * @param {number} pos - 字符位置
    */
   private meetGt(pos: number) {
@@ -606,6 +624,7 @@ class NuLinter {
   /**
    * 遇到小於符號 <
    *
+   * @internal
    * @param {number} pos - 字符位置
    */
   private meetLt(pos: number) {
@@ -627,6 +646,7 @@ class NuLinter {
   /**
    * 遇到逗號 ,
    *
+   * @internal
    * @param {number} pos - 字符位置
    */
   private meetComma(pos: number) {
@@ -650,6 +670,8 @@ class NuLinter {
 
   /**
    * 檢查是否剩下尚未配對的表單項目
+   *
+   * @internal
    */
   private checkUnmatchedItem() {
     const unmatchedItem = this.iStack.pop() ?? -1;
@@ -660,6 +682,8 @@ class NuLinter {
 
   /**
    * 檢查是否剩下尚未配對的引號
+   *
+   * @internal
    */
   private checkUnmatchedQuote() {
     const unmatchedQuote = this.qStack.pop() ?? -1;
@@ -669,6 +693,8 @@ class NuLinter {
 
   /**
    * 檢查是否剩下尚未配對的括號
+   *
+   * @internal
    */
   private checkUnmatchedParen() {
     const unmatchedParen = this.pStack.pop() ?? -1;
@@ -682,7 +708,7 @@ export const nuLint = new NuLinter();
 
 export const nuformulaLinter = (callback: (error: Diagnostic) => void) => {
   return linter((view: EditorView) => {
-    const { state } = view as EditorView;
+    const { state } = view;
     const error = nuLint.verify(state.doc.toString()) as Diagnostic;
     callback(error);
     if (error?.severity) return [error];
