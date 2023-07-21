@@ -4,5 +4,70 @@
       "text": "SUM((1),2)",
       "result": null
     }
+  ],
+  "missingOperator": [
+    {
+      "text": "SUM(100)",
+      "result": null
+    },
+    {
+      "text": "SUM(100\"123\")",
+      "result": {
+        "from": 7,
+        "to": 7,
+        "severity": "error",
+        "message": "語法錯誤，缺少標示符: missingOperator"
+      }
+    },
+    {
+      "text": "SUM(100{aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa})",
+      "result": {
+        "from": 7,
+        "to": 7,
+        "severity": "error",
+        "message": "語法錯誤，缺少標示符: missingOperator"
+      }
+    },
+    {
+      "text": "SUM(\"123\"100)",
+      "result": {
+        "from": 9,
+        "to": 9,
+        "severity": "error",
+        "message": "語法錯誤，缺少標示符: missingOperator"
+      }
+    }
+  ],
+  "invalidArgCount": [
+    {
+      "text": "IF()",
+      "result": {
+        "from": 0,
+        "to": 4,
+        "severity": "error",
+        "message": "語法錯誤，IF 錯誤的參數數量: invalidArgCount"
+      }
+    },
+    {
+      "text": "IF(100>5,\"TRUE\",105)",
+      "result": null
+    },
+    {
+      "text": "(100+200)/30",
+      "result": null
+    },
+    {
+      "text": "(100+200,200+(\"a\"),\"這是字串\")",
+      "result": null
+    },
+    {
+      "text": "(100+200,\"這是字串\"),0.28",
+      "result": {
+        "from": 0,
+        "to": 21,
+        "severity": "error",
+        "message": "語法錯誤，公式 錯誤的參數數量: invalidArgCount"
+      }
+    }
   ]
 }

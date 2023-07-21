@@ -3,7 +3,6 @@ import { isEmptyValue } from "./utils";
 import { EditorView } from "@codemirror/view";
 import { funcName } from "./constants";
 
-
 // 函式參數紀錄物件格式
 type FuncArg = {
   name: string;
@@ -18,7 +17,6 @@ type ErrorMessage = {
   length?: number;
   text?: string;
 };
-
 
 enum ERROR {
   unmatchedParen, // -------- 括號不對稱
@@ -115,6 +113,7 @@ const isValidFuncArg = ({ name, argCount }: FuncArg): boolean => {
     case funcName.AVERAGE:
     case funcName.CONCAT:
     case funcName.SUM:
+    case "arithmetic":
       return true;
     default:
       return argCount <= 1;
@@ -127,7 +126,7 @@ const isValidFuncArg = ({ name, argCount }: FuncArg): boolean => {
  */
 const throwError = (errorMessage: ErrorMessage) => {
   const { message, ...info } = errorMessage;
-  const error = new Error(ERROR[message]);
+  const error = new Error(String(message));
   throw Object.assign(error, info);
 };
 
@@ -313,20 +312,21 @@ class NuLinter {
    * @returns {object}
    */
   private errorMsg(error: ErrorMessage) {
-    const { message: type, pos, length = 1, text } = error;
+    const { message, pos, length = 1, text } = error;
+    const errorType = Number(message);
     const fromPos = (position: number): number =>
       position <= 0 ? 0 : position;
     const toPos = (position: number): number =>
       position >= this.length ? this.length : position;
 
-    switch (type) {
+    switch (errorType) {
       // 括號不對稱
       case ERROR.unmatchedParen:
         return {
           from: fromPos(pos),
           to: toPos(pos + 1),
           severity: "error",
-          message: `語法錯誤，括號不對稱: ${ERROR.unmatchedParen}`,
+          message: `語法錯誤，括號不對稱: ${ERROR[errorType]}`,
         };
       // 引號不對稱
       case ERROR.unmatchedQuote:
@@ -334,7 +334,7 @@ class NuLinter {
           from: fromPos(pos),
           to: toPos(pos + 1),
           severity: "error",
-          message: `語法錯誤，引號不對稱: ${ERROR.unmatchedQuote}`,
+          message: `語法錯誤，引號不對稱: ${ERROR[errorType]}`,
         };
       // 不合法的項目元件
       case ERROR.invalidItem:
@@ -342,7 +342,7 @@ class NuLinter {
           from: fromPos(pos),
           to: toPos(pos + length),
           severity: "error",
-          message: `語法錯誤，不合法的項目元件: ${ERROR.invalidItem}`,
+          message: `語法錯誤，不合法的項目元件: ${ERROR[errorType]}`,
         };
       // 缺少標示符
       case ERROR.missingOperator:
@@ -350,7 +350,7 @@ class NuLinter {
           from: fromPos(pos + 1),
           to: toPos(pos + 1),
           severity: "error",
-          message: `語法錯誤，缺少標示符: ${ERROR.missingOperator}`,
+          message: `語法錯誤，缺少標示符: ${ERROR[errorType]}`,
         };
       // 錯誤的標示符
       case ERROR.invalidOperator:
@@ -358,7 +358,7 @@ class NuLinter {
           from: fromPos(pos),
           to: toPos(pos + length),
           severity: "error",
-          message: `語法錯誤，錯誤的標示符: ${ERROR.invalidOperator}`,
+          message: `語法錯誤，錯誤的標示符: ${ERROR[errorType]}`,
         };
       // 錯誤的函式
       case ERROR.invalidFuncName:
@@ -366,7 +366,7 @@ class NuLinter {
           from: fromPos(pos),
           to: toPos(pos + length),
           severity: "error",
-          message: `語法錯誤，錯誤的函式: ${ERROR.invalidFuncName}`,
+          message: `語法錯誤，錯誤的函式: ${ERROR[errorType]}`,
         };
       // 錯誤的參數數量
       case ERROR.invalidArgCount:
@@ -374,7 +374,9 @@ class NuLinter {
           from: fromPos(pos),
           to: toPos(pos + length),
           severity: "error",
-          message: `語法錯誤，${text} 錯誤的參數數量: ${ERROR.invalidArgCount}`,
+          message: `語法錯誤，${text ?? "公式"} 錯誤的參數數量: ${
+            ERROR[errorType]
+          }`,
         };
       // 語法錯誤
       case ERROR.syntaxError:
@@ -382,14 +384,14 @@ class NuLinter {
           from: fromPos(pos),
           to: toPos(pos + length),
           severity: "error",
-          message: `語法錯誤，無法識別的字符: ${ERROR.syntaxError}`,
+          message: `語法錯誤，無法識別的字符: ${ERROR[errorType]}`,
         };
       default:
         return {
           from: 0,
           to: this.length,
           severity: "error",
-          message: `語法錯誤: ${type}`,
+          message: `語法錯誤`,
         };
     }
   }
@@ -530,7 +532,11 @@ class NuLinter {
           length: this.funcName.length,
         });
     }
-    this.fStack.push({ name: this.funcName, argCount: 0, pos: pos });
+    this.fStack.push({
+      name: isEmptyValue(this.funcName) ? "arithmetic" : this.funcName,
+      argCount: 0,
+      pos: pos,
+    });
     this.funcName = "";
     this.pStack.push(pos);
   }
@@ -654,18 +660,19 @@ class NuLinter {
     if (!isValidOperator(this.prevChar, this.nextChar))
       throwError({ message: ERROR.invalidOperator, pos: pos });
 
-    const funcArg = this.fStack.pop() as FuncArg;
-    if (Object.keys(funcArg).length === 0) {
+    const funcArg = this.fStack.pop() as FuncArg | undefined;
+
+    if (funcArg === undefined || Object.keys(funcArg).length === 0)
       throwError({
         message: ERROR.invalidArgCount,
         pos: 0,
         length: this.length,
       });
+    else {
+      this.fStack.push(
+        Object.assign(funcArg, { argCount: funcArg.argCount + 1 })
+      );
     }
-
-    this.fStack.push(
-      Object.assign(funcArg, { argCount: funcArg.argCount + 1 })
-    );
   }
 
   /**
@@ -675,9 +682,8 @@ class NuLinter {
    */
   private checkUnmatchedItem() {
     const unmatchedItem = this.iStack.pop() ?? -1;
-    if (unmatchedItem > -1) {
+    if (unmatchedItem > -1)
       throwError({ message: ERROR.invalidItem, pos: unmatchedItem });
-    }
   }
 
   /**
