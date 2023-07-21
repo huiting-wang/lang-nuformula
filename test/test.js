@@ -1,4 +1,4 @@
-import { NuformulaLanguage, nuLint } from "../dist/index.js";
+import { NuformulaLanguage, nuLint, nuformulaEvaluation } from "../dist/index.js";
 import { fileTests } from "@lezer/generator/dist/test";
 import { fileURLToPath } from "url";
 import * as fs from "fs";
@@ -32,6 +32,25 @@ describe("linter", () => {
         it(text, () => {
           const answer = nuLint.verify(text);
           assert.equal(answer, result);
+        });
+      });
+    });
+  });
+});
+
+// 測試 evaluation
+const { default: evaluationTestCase } = await import("./evaluation.json", {
+  assert: { type: "json" },
+});
+describe("evaluation arithmetic", () => {
+  Object.entries(evaluationTestCase).forEach(([name, cases]) => {
+    describe(name, () => {
+      cases.forEach((test) => {
+        const { formula, answer, postfix } = test;
+        it(formula, () => {
+          const evaMethod = nuformulaEvaluation.getEvaluation(postfix);
+          const result = evaMethod({});
+          assert.equal(result, answer === "NaN" ? NaN : answer);
         });
       });
     });

@@ -8,7 +8,7 @@ import {
   DecorationSet,
 } from "@codemirror/view";
 import { syntaxTree } from "@codemirror/language";
-import { Item } from "./utils";
+import { Item } from "./constants";
 
 /**
  * 輸出 表單元件 decoration 插件
@@ -38,7 +38,7 @@ export function nuformulaItemWidget(formItems: { [key: string]: Item }) {
       wrap.innerText = this.text;
       return wrap;
     }
-    ignoreEvent() {
+    override ignoreEvent() {
       return false;
     }
   }
@@ -61,7 +61,8 @@ export function nuformulaItemWidget(formItems: { [key: string]: Item }) {
               node.from + 1,
               node.to - 1
             );
-            const item = formItems[itemSn] ?? {};
+            const item = formItems[itemSn];
+            if (item === undefined) return;
             let deco = Decoration.replace({
               widget: new ItemWidget(item, node.type.isError),
               side: 1,

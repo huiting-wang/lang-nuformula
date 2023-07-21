@@ -1,11 +1,41 @@
 {
   "compilerOptions": {
-    "strict": true,
     "target": "es6",
     "module": "es2020",
     "newLine": "lf",
     "declaration": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+
+    // 略過內部宣告
+    "stripInternal": true,
+
+    // Strict 模式
+    "strict": true,
+    "alwaysStrict": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+    "strictBindCallApply": true,
+    "strictFunctionTypes": true,
+    "strictPropertyInitialization": true,
+    "useUnknownInCatchVariables": true,
+
+    // 檢查無用程式碼
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "allowUnusedLabels": false,
+    "allowUnreachableCode": false,
+
+    // 檢查隱式程式碼
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+
+    // 其他語法檢查
+    "noUncheckedIndexedAccess": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noFallthroughCasesInSwitch": true,
+    "exactOptionalPropertyTypes": true,
+    "forceConsistentCasingInFileNames": true
   },
-  "include": ["src/*.ts"]
+  "include": ["src/*.ts", "src/typings/global/formula.d.ts"]
 }
