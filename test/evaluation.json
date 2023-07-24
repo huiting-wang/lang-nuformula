@@ -809,5 +809,24 @@
         }
       ]
     }
+  ],
+  "formItem": [
+    {
+      "formula": "={aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa}",
+      "answer": "蘋果",
+      "postfix": [
+        {
+          "type": "item",
+          "op": "operand",
+          "value": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+        },
+        {
+          "type": "function",
+          "op": "operator",
+          "value": "equal",
+          "argCount": 1
+        }
+      ]
+    }
   ]
 }

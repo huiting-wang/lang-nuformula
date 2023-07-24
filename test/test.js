@@ -1,4 +1,8 @@
-import { NuformulaLanguage, nuLint, nuformulaEvaluation } from "../dist/index.js";
+import {
+  NuformulaLanguage,
+  nuLint,
+  nuformulaEvaluation,
+} from "../dist/index.js";
 import { fileTests } from "@lezer/generator/dist/test";
 import { fileURLToPath } from "url";
 import * as fs from "fs";
@@ -42,14 +46,40 @@ describe("linter", () => {
 const { default: evaluationTestCase } = await import("./evaluation.json", {
   assert: { type: "json" },
 });
-describe("evaluation arithmetic", () => {
+
+const mockItemSn = (c) =>
+  "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx".replace(/x/g, c);
+
+const formItems = {
+  [mockItemSn("a")]: {
+    sn: mockItemSn("a"),
+    type: "input",
+    options: { label: "商品名稱" },
+  },
+  [mockItemSn("b")]: {
+    sn: mockItemSn("b"),
+    type: "number",
+    options: { label: "商品單價" },
+  },
+  [mockItemSn("c")]: {
+    sn: mockItemSn("c"),
+    type: "number",
+    options: { label: "商品數量" },
+  },
+};
+nuformulaEvaluation.init(formItems);
+describe("evaluation", () => {
   Object.entries(evaluationTestCase).forEach(([name, cases]) => {
     describe(name, () => {
       cases.forEach((test) => {
         const { formula, answer, postfix } = test;
         it(formula, () => {
           const evaMethod = nuformulaEvaluation.getEvaluation(postfix);
-          const result = evaMethod({});
+          const result = evaMethod({
+            [mockItemSn("a")]: "蘋果",
+            [mockItemSn("b")]: 25,
+            [mockItemSn("c")]: 30,
+          });
           assert.equal(result, answer === "NaN" ? NaN : answer);
         });
       });
