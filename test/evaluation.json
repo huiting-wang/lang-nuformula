@@ -812,13 +812,13 @@
   ],
   "formItem": [
     {
-      "formula": "={aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa}",
+      "formula": "={input-aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa}",
       "answer": "蘋果",
       "postfix": [
         {
           "type": "item",
           "op": "operand",
-          "value": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+          "value": "input-aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
         },
         {
           "type": "function",

@@ -39,7 +39,7 @@ commaSep<value> { (value (Comma value)*)? }
 
   @precedence { Operator, Number }
 
-  Item { "{" hex+ "-" hex+ "-" hex+ "-" hex+ "-" hex+ "}" }
+  Item { "{" (@asciiLowercase+ "-")? hex+ "-" hex+ "-" hex+ "-" hex+ "-" hex+ "}" }
 
   whitespace { $[ \n\r\t] }
 

@@ -51,8 +51,8 @@ const mockItemSn = (c) =>
   "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx".replace(/x/g, c);
 
 const formItems = {
-  [mockItemSn("a")]: {
-    sn: mockItemSn("a"),
+  [`input-${mockItemSn("a")}`]: {
+    sn: `input-${mockItemSn("a")}`,
     type: "input",
     options: { label: "商品名稱" },
   },
@@ -76,7 +76,7 @@ describe("evaluation", () => {
         it(formula, () => {
           const evaMethod = nuformulaEvaluation.getEvaluation(postfix);
           const result = evaMethod({
-            [mockItemSn("a")]: "蘋果",
+            [`input-${mockItemSn("a")}`]: "蘋果",
             [mockItemSn("b")]: 25,
             [mockItemSn("c")]: 30,
           });

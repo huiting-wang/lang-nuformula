@@ -31,32 +31,15 @@ export enum argType {
   function = "function", // ----- 函式
 }
 
-// 表單項目類型字串
+// 可用表單項目類型字串
 export enum widgetType {
-  form = "form", // ------------------------- 表單
-  divider = "divider", // ------------------- 分割線
-  block = "block", // ----------------------- 區塊版型
-  table = "table", // ----------------------- 表格版型
-  grid = "grid", // ------------------------- 網格版型
   input = "input", // ----------------------- 單行輸入
   textarea = "textarea", // ----------------- 多行輸入
-  datetime = "datetime", // ----------------- 日期時間單日
-  datetimeRange = "datetime_range", // ------ 日期時間區間
   number = "number", // --------------------- 數字
   radio = "radio", // ----------------------- 單選
   checkbox = "checkbox", // ----------------- 複選
   select = "select", // --------------------- 下拉單選
   selectMultiple = "select_multiple", // ---- 下拉複選
-  upload = "upload", // --------------------- 檔案上傳
-  uploadImage = "upload_image", // ---------- 圖片上傳
-  staff = "staff", // ----------------------- 人員單選
-  staffMultiple = "staff_multiple", // ------ 人員複選
-  dept = "dept", // ------------------------- 部門單選
-  deptMultiple = "dept_multiple", // -------- 部門複選
-  subform = "subform", // ------------------- 子表
-  summary = "summary", // ------------------- 子表 - 合計欄位
-  serialNumber = "serial_number", // -------- 表單編號
-  info = "info", // ------------------------- 說明文字
 }
 
 export enum opName {

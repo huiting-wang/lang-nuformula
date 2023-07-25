@@ -3,7 +3,7 @@ import {
   Completion,
   CompletionContext,
 } from "@codemirror/autocomplete";
-import { funcName, Item } from "./constants";
+import { funcName, widgetType, Item } from "./constants";
 
 /**
  * 偵測自動選字方法
@@ -43,11 +43,13 @@ export function nuformulaAutocomplete(formItems: { [key: string]: Item }) {
   );
 
   // 表單元件
-  const itemList = Object.values(formItems).map((value: Item) => ({
-    label: value.options.label,
-    type: "variable",
-    apply: `{${value.sn}}`,
-  })) as Completion[];
+  const itemList = Object.values(formItems)
+    .filter((value: Item) => (Object.values(widgetType) as string[]).includes(value.type))
+    .map((value: Item) => ({
+      label: value.options.label,
+      type: "variable",
+      apply: `{${value.sn}}`,
+    })) as Completion[];
 
   const autocompleteOptions = ([] as Completion[]).concat(
     funcNameList,
