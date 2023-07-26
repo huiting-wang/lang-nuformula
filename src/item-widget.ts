@@ -10,6 +10,14 @@ import {
 import { syntaxTree } from "@codemirror/language";
 import { Item } from "./constants";
 
+function getUnknownWidget(): Item {
+  return {
+    sn: "unknown-item",
+    type: "unknown",
+    options: { label: "未知的元件" },
+  };
+}
+
 /**
  * 輸出 表單元件 decoration 插件
  *
@@ -31,9 +39,9 @@ export function nuformulaItemWidget(formItems: { [key: string]: Item }) {
       let wrap = document.createElement("span");
       wrap.style.cssText = `
           border-radius: 4px;
-          color: #6e7796;
+          color: ${this.isError ? "#fff1f1" : "#6e7796"};
           padding: 2px 4px;
-          background-color: ${this.isError ? "#f00" : "#e9ebf2"};
+          background-color: ${this.isError ? "#ff8585" : "#e9ebf2"};
         `;
       wrap.innerText = this.text;
       return wrap;
@@ -62,9 +70,9 @@ export function nuformulaItemWidget(formItems: { [key: string]: Item }) {
               node.to - 1
             );
             const item = formItems[itemSn];
-            if (item === undefined) return;
+            const isUnknownItem = item === undefined;
             let deco = Decoration.replace({
-              widget: new ItemWidget(item, node.type.isError),
+              widget: new ItemWidget(item ?? getUnknownWidget(), isUnknownItem),
               side: 1,
             });
             widgets.push(deco.range(node.from, node.to));
