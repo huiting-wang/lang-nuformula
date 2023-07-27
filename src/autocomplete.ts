@@ -46,7 +46,7 @@ export function nuformulaAutocomplete(formItems: { [key: string]: Item }) {
   const itemList = Object.values(formItems)
     .filter((value: Item) => (Object.values(widgetType) as string[]).includes(value.type))
     .map((value: Item) => ({
-      label: value.options.label,
+      label: value.label,
       type: "variable",
       apply: `{${value.sn}}`,
     })) as Completion[];

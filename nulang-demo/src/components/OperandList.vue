@@ -6,7 +6,7 @@
         <div class="formula-editor__list__scroll">
             <div v-for="item in operandList" :key="item.sn" class="formula-editor__operand"
                 @click.stop="$emit('add', item.sn)">
-                <p>{{ item.options.label }}</p>
+                <p>{{ item.label }}</p>
                 <div :class="['operand-tag', { [`is-${getTag(item.type).type}-type`]: true }]">
                     {{ getTag(item.type).label }}
                 </div>

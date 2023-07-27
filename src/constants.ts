@@ -2,13 +2,10 @@
 export type Item = {
   sn: string;
   type: string;
-  options: {
-    label?: string;
-    [key: string]: any;
-  };
-  [key: string]: any;
+  column: boolean;
+  label: string;
+  options?: { value: string; label: string }[];
 };
-
 
 /**
  * 運算子或運算元
@@ -65,3 +62,4 @@ export enum funcName {
   IF = "if", // ----------------------------- 條件
   CONCAT = "concat", // --------------------- 連接字串
 }
+

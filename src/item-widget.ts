@@ -14,7 +14,8 @@ function getUnknownWidget(): Item {
   return {
     sn: "unknown-item",
     type: "unknown",
-    options: { label: "未知的元件" },
+    column: false,
+    label: "未知的元件"
   };
 }
 
@@ -32,7 +33,7 @@ export function nuformulaItemWidget(formItems: { [key: string]: Item }) {
 
     constructor(item: Item, isError: boolean) {
       super();
-      this.text = item.options?.label ?? "未命名的元件";
+      this.text = item.label ?? "未命名的元件";
       this.isError = isError;
     }
     toDOM() {

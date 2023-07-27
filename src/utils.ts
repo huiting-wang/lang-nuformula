@@ -17,7 +17,7 @@ export function isNumber(value: any): boolean {
  * @param {any} value - 對象
  * @returns  {boolean}
  */
-export function isArray(value:any): boolean {
+export function isArray(value: any): boolean {
   return Array.isArray(value);
 }
 

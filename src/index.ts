@@ -36,3 +36,4 @@ export * from "./highlight";
 export * from "./autocomplete";
 export * from "./evaluation";
 export * from "./constants";
+export * from "./helper";
