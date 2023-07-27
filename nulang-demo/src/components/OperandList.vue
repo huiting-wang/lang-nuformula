@@ -28,7 +28,11 @@ const props = defineProps({
 })
 
 // 可用表單元件
-const operandList = reactive(Object.values(props.formItems))
+const validType = Object.values(widgetType);
+const operandList = reactive(Object.values(props.formItems).filter((item) =>
+    validType.includes(item.type)
+))
+
 
 /**
  * 取得表單元件分類標籤
@@ -40,6 +44,8 @@ function getTag(type: string): { type: string, label: string } {
     switch (type) {
         case widgetType.input:
         case widgetType.textarea:
+        case widgetType.radio:
+        case widgetType.select:
             tag.type = "text";
             tag.label = "文字";
             break;
@@ -48,6 +54,7 @@ function getTag(type: string): { type: string, label: string } {
             tag.label = "數字";
             break;
         case widgetType.checkbox:
+        case widgetType.selectMultiple:
             tag.type = "array";
             tag.label = "陣列";
             break;
