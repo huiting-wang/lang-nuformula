@@ -18,7 +18,7 @@ NuFormula(Number)
 
 # Item
 
-{aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa}
+{input-1ee149af-c328-6a0c-84e2-0242994894d2}
 
 ===> 
 
@@ -26,7 +26,7 @@ NuFormula(Item)
 
 # operations
 
-10*({aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa}+"這是一個字串")
+10*({1ee149af-c328-6a0c-84e2-0242994894d2}+"這是一個字串")
 
 ===> 
 

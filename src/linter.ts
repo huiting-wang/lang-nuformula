@@ -1,7 +1,7 @@
 import { linter, Diagnostic } from "@codemirror/lint";
 import { isEmptyValue } from "./utils";
 import { EditorView } from "@codemirror/view";
-import { funcName } from "./constants";
+import { funcName, widgetType } from "./constants";
 
 // 函式參數紀錄物件格式
 type FuncArg = {
@@ -49,8 +49,13 @@ const SYNTAX_bracket_l = `(\\{)`; // ---------- 左大括號 {
 const SYNTAX_bracket_r = `(\\})`; // ---------- 右大括號 }
 const SYNTAX_hex = `[0-9a-fA-F]`; // ---------- 十六進位字符
 
+// 是否為註冊的函式
+const SYNTAX_valid_func = `(${Object.keys(funcName).join("|")})`;
+// 是否為註冊的表單元件
+const SYNTAX_valid_item = `(${Object.values(widgetType).join("|")})`;
+
 // 表單項目序號
-const SYNTAX_item = `^${SYNTAX_hex}{8}\\-${SYNTAX_hex}{4}\\-${SYNTAX_hex}{4}\\-${SYNTAX_hex}{4}\\-${SYNTAX_hex}{12}$`;
+const SYNTAX_item = `^(${SYNTAX_valid_item}\\-)?${SYNTAX_hex}{8}\\-${SYNTAX_hex}{4}\\-${SYNTAX_hex}{4}\\-${SYNTAX_hex}{4}\\-${SYNTAX_hex}{12}$`;
 // 正負符號
 const SYNTAX_sign = `(${SYNTAX_plus}|${SYNTAX_minus})`;
 // 數學運算符號
@@ -70,8 +75,7 @@ const SYNTAX_lead_to_arg = `(${SYNTAX_empty}|${SYNTAX_comma}|${SYNTAX_paren_l}|$
 const SYNTAX_trail_to_arg = `(${SYNTAX_empty}|${SYNTAX_comma}|${SYNTAX_paren_r}|${SYNTAX_operator})`;
 // 是否為一個函式的合法結尾
 const SYNTAX_end_of_func = `(${SYNTAX_upper_case}|${SYNTAX_paren_l})`;
-// 是否為註冊的函式
-const SYNTAX_valid_func = `(${Object.keys(funcName).join("|")})`;
+
 
 /**
  * 判斷字符類型
@@ -200,9 +204,8 @@ class NuLinter {
         this.nextChar = text.charAt(pos + 1) ?? "";
 
         switch (true) {
-          // 跳過 \ 後的字符、跳過數字的字符
+          // 跳過 \ 後的字符
           case isSyntax(SYNTAX_slash, this.prevChar):
-          case isSyntax(SYNTAX_digit, this.char):
             continue;
 
           // 遇到小數點
@@ -252,6 +255,10 @@ class NuLinter {
           // 遇到大寫字母
           case isSyntax(SYNTAX_upper_case, this.char):
             this.meetUppercase(pos);
+            continue;
+
+          // 跳過數字的字符
+          case isSyntax(SYNTAX_digit, this.char):
             continue;
 
           // 遇到數學符號 * | /

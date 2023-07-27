@@ -1,4 +1,14 @@
 {
+  "invalidItem": [
+    {
+      "text": "{1ee149af-c328-6a0c-84e2-0242994894d2}",
+      "result": null
+    },
+    {
+      "text": "{input-1ee19821-cdb9-6cda-8972-0242994894d2}",
+      "result": null
+    }
+  ],
   "unmatchedParen": [
     {
       "text": "SUM((1),2)",
