@@ -10,6 +10,11 @@ type Argument = {
   argCount?: number; // ---- 函式參數數量
 };
 
+type SelectOption = {
+  label: string;
+  value: string;
+};
+
 /**
  * 移除 " 字符
  *
@@ -108,10 +113,40 @@ class FormulaEvaluation {
         switch (this.formItems[arg.value]?.type) {
           // 單行文字元件
           case widgetType.input:
+          // 多行文字元件
+          case widgetType.textarea:
             return removeQuotation(formData[arg.value]);
           // 數字元件
           case widgetType.number:
             return truncateMaxNumber(formData[arg.value]);
+          // 單選
+          case widgetType.radio:
+            return this.findStringOptionLabel(
+              arg.value,
+              formData[arg.value],
+              "radioOptions"
+            );
+          // 複選
+          case widgetType.checkbox:
+            return this.findArrayOptionLabel(
+              arg.value,
+              formData[arg.value],
+              "checkboxOptions"
+            );
+          // 下拉單選
+          case widgetType.select:
+            return this.findStringOptionLabel(
+              arg.value,
+              formData[arg.value],
+              "selectOptions"
+            );
+          // 下拉複選
+          case widgetType.selectMultiple:
+            return this.findArrayOptionLabel(
+              arg.value,
+              formData[arg.value],
+              "selectMultipleOptions"
+            );
           default:
             // TODO: 考慮其他元件
             return arg.value;
@@ -119,6 +154,48 @@ class FormulaEvaluation {
       default:
         return arg?.value;
     }
+  }
+
+  /**
+   * 取得 單選 radio / 下拉單選 select 標籤字串
+   *
+   * @param {string} itemSn - 表單項目
+   * @param {string} value - 填寫值
+   * @param {string} type - 選項鍵值
+   * @returns {string}
+   */
+  findStringOptionLabel(
+    itemSn: string,
+    value: string | undefined,
+    type: string
+  ) {
+    const itemOptions = this.formItems[itemSn]?.options ?? {};
+    const options = itemOptions[type] ?? ([] as SelectOption[]);
+    if (!options?.length || isEmptyValue(value)) return "";
+    return options.find((opt: SelectOption): boolean => opt.value === value)
+      .label;
+  }
+
+  /**
+   * 取得 單選 radio / 下拉單選 select 標籤字串
+   *
+   * @param {string} itemSn - 表單項目
+   * @param {Array} value - 填寫值
+   * @param {string} type - 選項鍵值
+   * @returns {string}
+   */
+  findArrayOptionLabel(
+    itemSn: string,
+    value: string[] | undefined,
+    type: string
+  ) {
+    const itemOptions = this.formItems[itemSn]?.options ?? {};
+    const options = itemOptions[type] ?? ([] as SelectOption[]);
+    if (!options?.length || !value?.length) return [];
+    return value.map(
+      (key) =>
+        options.find((opt: SelectOption): boolean => opt.value === key).label
+    );
   }
 }
 

@@ -3,7 +3,7 @@ export type Item = {
   sn: string;
   type: string;
   options: {
-    label: string;
+    label?: string;
     [key: string]: any;
   };
   [key: string]: any;

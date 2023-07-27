@@ -8,6 +8,7 @@ import { fileURLToPath } from "url";
 import * as fs from "fs";
 import * as path from "path";
 import * as assert from "assert";
+import { testFormItems, testFormData } from "./form-data.js";
 
 // 測試 lezer grammar
 let languageTestCase = "language.txt";
@@ -47,27 +48,8 @@ const { default: evaluationTestCase } = await import("./evaluation.json", {
   assert: { type: "json" },
 });
 
-const mockItemSn = (c) =>
-  "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx".replace(/x/g, c);
 
-const formItems = {
-  [`input-${mockItemSn("a")}`]: {
-    sn: `input-${mockItemSn("a")}`,
-    type: "input",
-    options: { label: "商品名稱" },
-  },
-  [mockItemSn("b")]: {
-    sn: mockItemSn("b"),
-    type: "number",
-    options: { label: "商品單價" },
-  },
-  [mockItemSn("c")]: {
-    sn: mockItemSn("c"),
-    type: "number",
-    options: { label: "商品數量" },
-  },
-};
-nuformulaEvaluation.init(formItems);
+nuformulaEvaluation.init(testFormItems);
 describe("evaluation", () => {
   Object.entries(evaluationTestCase).forEach(([name, cases]) => {
     describe(name, () => {
@@ -75,11 +57,7 @@ describe("evaluation", () => {
         const { formula, answer, postfix } = test;
         it(formula, () => {
           const evaMethod = nuformulaEvaluation.getEvaluation(postfix);
-          const result = evaMethod({
-            [`input-${mockItemSn("a")}`]: "蘋果",
-            [mockItemSn("b")]: 25,
-            [mockItemSn("c")]: 30,
-          });
+          const result = evaMethod(testFormData);
           assert.equal(result, answer === "NaN" ? NaN : answer);
         });
       });
