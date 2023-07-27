@@ -12,6 +12,16 @@ export function isNumber(value: any): boolean {
 }
 
 /**
+ * 對象是否為陣列
+ *
+ * @param {any} value - 對象
+ * @returns  {boolean}
+ */
+export function isArray(value:any): boolean {
+  return Array.isArray(value);
+}
+
+/**
  * 對象是否為空
  * @param {any} value - 對象
  * @returns {boolean}

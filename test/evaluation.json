@@ -204,7 +204,7 @@
     },
     {
       "formula": "=\"這是字串\"+100",
-      "answer": "NaN",
+      "answer": "這是字串100",
       "postfix": [
         { "type": "constant", "op": "operand", "value": "這是字串" },
         { "type": "number", "op": "operand", "value": 100 },
@@ -812,13 +812,167 @@
   ],
   "formItem": [
     {
-      "formula": "={input-aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa}",
-      "answer": "蘋果",
+      "formula": "={input-cfc487a1-0324-4267-89cf-190b9b0b3087}",
+      "answer": "這是一個單行文字",
       "postfix": [
         {
           "type": "item",
           "op": "operand",
-          "value": "input-aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+          "value": "input-cfc487a1-0324-4267-89cf-190b9b0b3087"
+        },
+        {
+          "type": "function",
+          "op": "operator",
+          "value": "equal",
+          "argCount": 1
+        }
+      ]
+    },
+    {
+      "formula": "={textarea-f2883251-2e7f-4312-a8ea-629aaf9025e4}",
+      "answer": "這是一個多行文字\n這是一個多行文字",
+      "postfix": [
+        {
+          "type": "item",
+          "op": "operand",
+          "value": "textarea-f2883251-2e7f-4312-a8ea-629aaf9025e4"
+        },
+        {
+          "type": "function",
+          "op": "operator",
+          "value": "equal",
+          "argCount": 1
+        }
+      ]
+    },
+    {
+      "formula": "={number-2c78962c-4a31-4b16-9244-5a30864b4fe7}",
+      "answer": 1000,
+      "postfix": [
+        {
+          "type": "item",
+          "op": "operand",
+          "value": "number-2c78962c-4a31-4b16-9244-5a30864b4fe7"
+        },
+        {
+          "type": "function",
+          "op": "operator",
+          "value": "equal",
+          "argCount": 1
+        }
+      ]
+    },
+    {
+      "formula": "={radio-0c05c59c-854b-4393-ad2a-7900ae865dfa}",
+      "answer": "選項一",
+      "postfix": [
+        {
+          "type": "item",
+          "op": "operand",
+          "value": "radio-0c05c59c-854b-4393-ad2a-7900ae865dfa"
+        },
+        {
+          "type": "function",
+          "op": "operator",
+          "value": "equal",
+          "argCount": 1
+        }
+      ]
+    },
+    {
+      "formula": "=CONCAT(\"複選值為：\",{checkbox-b1a51709-b470-4d74-94c1-b986fbc0f224})",
+      "answer": "複選值為：選項一,選項二,其他",
+      "postfix": [
+        { "type": "constant", "op": "operand", "value": "複選值為：" },
+        {
+          "type": "item",
+          "op": "operand",
+          "value": "checkbox-b1a51709-b470-4d74-94c1-b986fbc0f224"
+        },
+        {
+          "type": "function",
+          "op": "operator",
+          "value": "concat",
+          "argCount": 2
+        },
+        {
+          "type": "function",
+          "op": "operator",
+          "value": "equal",
+          "argCount": 1
+        }
+      ]
+    },
+    {
+      "formula": "={select-1d8de357-e044-4102-924e-49eaf57a545a}",
+      "answer": "選項二",
+      "postfix": [
+        {
+          "type": "item",
+          "op": "operand",
+          "value": "select-1d8de357-e044-4102-924e-49eaf57a545a"
+        },
+        {
+          "type": "function",
+          "op": "operator",
+          "value": "equal",
+          "argCount": 1
+        }
+      ]
+    },
+    {
+      "formula": "=CONCAT(\"下拉複選值為：\",{select_multiple-6958f624-c3b3-4784-8678-fabbf3a8c2b4})",
+      "answer": "下拉複選值為：選項一,選項二",
+      "postfix": [
+        { "type": "constant", "op": "operand", "value": "下拉複選值為：" },
+        {
+          "type": "item",
+          "op": "operand",
+          "value": "select_multiple-6958f624-c3b3-4784-8678-fabbf3a8c2b4"
+        },
+        {
+          "type": "function",
+          "op": "operator",
+          "value": "concat",
+          "argCount": 2
+        },
+        {
+          "type": "function",
+          "op": "operator",
+          "value": "equal",
+          "argCount": 1
+        }
+      ]
+    }
+  ],
+  "complexFormItem": [
+    {
+      "formula": "={number-2c78962c-4a31-4b16-9244-5a30864b4fe7}+200",
+      "answer": 1200,
+      "postfix": [
+        {
+          "type": "item",
+          "op": "operand",
+          "value": "number-2c78962c-4a31-4b16-9244-5a30864b4fe7"
+        },
+        { "type": "number", "op": "operand", "value": 200 },
+        { "type": "math", "op": "operator", "value": "add", "argCount": 2 },
+        {
+          "type": "function",
+          "op": "operator",
+          "value": "equal",
+          "argCount": 1
+        }
+      ]
+    },
+    {
+      "formula": "={select_multiple-6958f624-c3b3-4784-8678-fabbf3a8c2b4}",
+      "answer": "選項一,選項二",
+      "postfix": [
+        {
+          "type": "item",
+          "op": "operand",
+          "value": "select_multiple-6958f624-c3b3-4784-8678-fabbf3a8c2b4"
         },
         {
           "type": "function",
