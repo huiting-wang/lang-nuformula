@@ -96,7 +96,7 @@ function getTag(type: string): { type: string, label: string } {
         margin: 4px 12px;
         padding: 4px 12px;
         border-radius: 4px;
-        height: 32px;
+        min-height: 32px;
         cursor: pointer;
 
         &:hover {
@@ -109,6 +109,7 @@ function getTag(type: string): { type: string, label: string } {
     }
 
     .operand-tag {
+        flex-shrink: 0;
         color: #fff;
         padding: 2px 14px;
         border-radius: 5px;

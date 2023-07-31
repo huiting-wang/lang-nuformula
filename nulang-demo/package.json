@@ -6,11 +6,12 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "update": "npm i codemirror-lang-nuformula@latest && npm outdated"
   },
   "dependencies": {
     "codemirror": "^6.0.1",
-    "codemirror-lang-nuformula": "^0.2.14",
+    "codemirror-lang-nuformula": "^0.2.15",
     "vue": "^3.3.4"
   },
   "devDependencies": {
