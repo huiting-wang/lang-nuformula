@@ -8,6 +8,7 @@
 
 - 建置： `npm run prepare`
 - 測試：`npm test`
+- 展示站：[`https://yun-chien-lo.github.io/lang-nuformula/`](https://yun-chien-lo.github.io/lang-nuformula/)
 
 ## Structure 資料夾結構拆分
 ```
