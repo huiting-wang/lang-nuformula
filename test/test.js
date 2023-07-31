@@ -2,6 +2,7 @@ import {
   NuformulaLanguage,
   nuLint,
   nuformulaEvaluation,
+  formatFormItems,
 } from "../dist/index.js";
 import { fileTests } from "@lezer/generator/dist/test";
 import { fileURLToPath } from "url";
@@ -49,7 +50,7 @@ const { default: evaluationTestCase } = await import("./evaluation.json", {
 });
 
 
-nuformulaEvaluation.init(testFormItems);
+nuformulaEvaluation.init(formatFormItems(testFormItems));
 describe("evaluation", () => {
   Object.entries(evaluationTestCase).forEach(([name, cases]) => {
     describe(name, () => {

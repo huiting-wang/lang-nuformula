@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "codemirror": "^6.0.1",
-    "codemirror-lang-nuformula": "^0.2.13",
+    "codemirror-lang-nuformula": "^0.2.14",
     "vue": "^3.3.4"
   },
   "devDependencies": {

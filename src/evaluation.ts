@@ -121,32 +121,16 @@ class FormulaEvaluation {
             return truncateMaxNumber(formData[arg.value]);
           // 單選
           case widgetType.radio:
-            return this.findStringOptionLabel(
-              arg.value,
-              formData[arg.value],
-              "radioOptions"
-            );
+            return this.findStringOptionLabel(arg.value, formData[arg.value]);
           // 複選
           case widgetType.checkbox:
-            return this.findArrayOptionLabel(
-              arg.value,
-              formData[arg.value],
-              "checkboxOptions"
-            );
+            return this.findArrayOptionLabel(arg.value, formData[arg.value]);
           // 下拉單選
           case widgetType.select:
-            return this.findStringOptionLabel(
-              arg.value,
-              formData[arg.value],
-              "selectOptions"
-            );
+            return this.findStringOptionLabel(arg.value, formData[arg.value]);
           // 下拉複選
           case widgetType.selectMultiple:
-            return this.findArrayOptionLabel(
-              arg.value,
-              formData[arg.value],
-              "selectMultipleOptions"
-            );
+            return this.findArrayOptionLabel(arg.value, formData[arg.value]);
           default:
             // TODO: 考慮其他元件
             return arg.value;
@@ -161,19 +145,16 @@ class FormulaEvaluation {
    *
    * @param {string} itemSn - 表單項目
    * @param {string} value - 填寫值
-   * @param {string} type - 選項鍵值
    * @returns {string}
    */
-  findStringOptionLabel(
-    itemSn: string,
-    value: string | undefined,
-    type: string
-  ) {
-    const itemOptions = this.formItems[itemSn]?.options ?? {};
-    const options = itemOptions[type] ?? ([] as SelectOption[]);
+  findStringOptionLabel(itemSn: string, value: string | undefined) {
+    const options = this.formItems[itemSn]?.options ?? [];
     if (!options?.length || isEmptyValue(value)) return "";
-    return options.find((opt: SelectOption): boolean => opt.value === value)
-      .label;
+    return (
+      options.find(
+        (opt: SelectOption): boolean => opt.value === value
+      ) as SelectOption
+    ).label;
   }
 
   /**
@@ -184,17 +165,16 @@ class FormulaEvaluation {
    * @param {string} type - 選項鍵值
    * @returns {string}
    */
-  findArrayOptionLabel(
-    itemSn: string,
-    value: string[] | undefined,
-    type: string
-  ) {
-    const itemOptions = this.formItems[itemSn]?.options ?? {};
-    const options = itemOptions[type] ?? ([] as SelectOption[]);
+  findArrayOptionLabel(itemSn: string, value: string[] | undefined) {
+    const options = this.formItems[itemSn]?.options ?? [];
     if (!options?.length || !value?.length) return [];
     return value.map(
       (key) =>
-        options.find((opt: SelectOption): boolean => opt.value === key).label
+        (
+          options.find(
+            (opt: SelectOption): boolean => opt.value === key
+          ) as SelectOption
+        ).label
     );
   }
 }
