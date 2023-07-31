@@ -1,5 +1,8 @@
-import { HighlightStyle, syntaxHighlighting } from "@codemirror/language";
-import { tags } from "@lezer/highlight";
+import {
+  HighlightStyle,
+  syntaxHighlighting,
+} from "@codemirror/language";
+import { tags, Highlighter } from "@lezer/highlight";
 
 // 語言標籤樣式
 export function nuformulaHighlightStyle() {
@@ -12,6 +15,6 @@ export function nuformulaHighlightStyle() {
       { tag: tags.variableName, color: "#6E7796" },
       { tag: tags.paren, color: "#404040" },
       { tag: tags.separator, color: "#404040" },
-    ])
+    ]) as Highlighter
   );
 }
