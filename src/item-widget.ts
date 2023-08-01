@@ -14,6 +14,7 @@ function getUnknownWidget(): Item {
   return {
     sn: "unknown-item",
     type: "unknown",
+    parent: "",
     column: false,
     label: "未知的元件"
   };

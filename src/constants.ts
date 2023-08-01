@@ -3,6 +3,7 @@ export type Item = {
   sn: string;
   type: string;
   column: boolean;
+  parent: string;
   label: string;
   options?: { value: string; label: string }[];
 };

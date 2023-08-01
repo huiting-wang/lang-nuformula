@@ -10,6 +10,7 @@ type Argument = {
   argCount?: number; // ---- 函式參數數量
 };
 
+// 單複選 選項物件格式
 type SelectOption = {
   label: string;
   value: string;
@@ -45,10 +46,20 @@ class FormulaEvaluation {
    * 取得公式計算方法
    *
    * @param {Array} postfixStack - postfix 公式佇列
+   * @param {string} assignTarget - 公式賦值的元件序號
    * @returns {Function}
    */
-  getEvaluation(postfixStack: Argument[]) {
-    return (scopedData: { [key: string]: any }): string | number => {
+  getEvaluation(postfixStack: Argument[], assignTarget?: string) {
+    /**
+     * 公式計算方法
+     *
+     * @param {object} scopedData - 當前表單填寫值
+     * @param {string} row - 子表列序號 (若該元件是子表內的欄位的話才有)
+     */
+    return (
+      scopedData: { [key: string]: any },
+      row?: string
+    ): string | number => {
       // postfix 佇列
       let stack = [...postfixStack] as Argument[];
       // 運算元佇列
@@ -72,12 +83,15 @@ class FormulaEvaluation {
           for (let i = 0; i < currentArg.argCount; i++) {
             const operand = operandStack.pop();
             if (operand)
-              argumentStack.unshift(this.getValue(operand, scopedData));
+              argumentStack.unshift(
+                this.getValue(operand, scopedData, assignTarget, row)
+              );
           }
           // 將這些運算元與運算子進行運算
-          evaResult = NuEvaluationLib[
-            currentArg.value as keyof typeof NuEvaluationLib
-          ](argumentStack) ;
+          evaResult =
+            NuEvaluationLib[currentArg.value as keyof typeof NuEvaluationLib](
+              argumentStack
+            );
           // 將結果再次推回 postfix 佇列
           operandStack.push({
             op: opType.operand,
@@ -98,9 +112,15 @@ class FormulaEvaluation {
    * @internal
    * @param {object} arg - 參數物件
    * @param {object} formData - 當前表單填寫值
+   * @param {string} assignTarget - 公式賦值的元件序號
    * @returns {any} - 運算元的值 (operand)
    */
-  private getValue(arg: Argument, formData: { [key: string]: any }) {
+  private getValue(
+    arg: Argument,
+    formData: { [key: string]: any },
+    assignTarget?: string,
+    row?: string
+  ) {
     switch (arg?.type) {
       // 常數字串
       case argType.constant:
@@ -110,33 +130,114 @@ class FormulaEvaluation {
         return truncateMaxNumber(arg.value);
       // 表單元件
       case argType.item:
-        switch (this.formItems[arg.value]?.type) {
-          // 單行文字元件
-          case widgetType.input:
-          // 多行文字元件
-          case widgetType.textarea:
-            return removeQuotation(formData[arg.value]);
-          // 數字元件
-          case widgetType.number:
-            return truncateMaxNumber(formData[arg.value]);
-          // 單選
-          case widgetType.radio:
-            return this.findStringOptionLabel(arg.value, formData[arg.value]);
-          // 複選
-          case widgetType.checkbox:
-            return this.findArrayOptionLabel(arg.value, formData[arg.value]);
-          // 下拉單選
-          case widgetType.select:
-            return this.findStringOptionLabel(arg.value, formData[arg.value]);
-          // 下拉複選
-          case widgetType.selectMultiple:
-            return this.findArrayOptionLabel(arg.value, formData[arg.value]);
-          default:
-            // TODO: 考慮其他元件
-            return arg.value;
-        }
+        return this.getItemValue(arg, formData, assignTarget, row);
       default:
         return arg?.value;
+    }
+  }
+
+  /**
+   * 取得元件填寫值
+   *
+   * @internal
+   * @param {object} arg - 參數物件
+   * @param {object} formData - 當前表單填寫值
+   * @param {string} assignTarget - 公式賦值的元件序號
+   * @returns {any} - 運算元的值 (operand)
+   */
+  getItemValue(
+    arg: Argument,
+    formData: { [key: string]: any },
+    assignTarget?: string,
+    rowId?: string
+  ) {
+    const formItem = this.formItems[arg.value] as Item;
+    const targetIsColumn = !assignTarget
+      ? false
+      : (this.formItems[assignTarget] as Item)?.column;
+
+    // 普通元件 = 普通元件
+    if (!targetIsColumn && !formItem.column) {
+      return this.getFormattedValue(
+        formItem?.type,
+        arg.value,
+        formData[arg.value]
+      );
+    }
+
+    // 普通元件 = 子表元件
+    if (!targetIsColumn && formItem.column) {
+      const subformData = formData[formItem.parent] ?? [];
+      return subformData.reduce(
+        (column: any[], row: { [key: string]: any }) => {
+          column.push(
+            this.getFormattedValue(formItem?.type, arg.value, row[formItem.sn])
+          );
+          return column;
+        },
+        [] as any[]
+      );
+    }
+
+    // 子表元件 = 普通元件
+    if (targetIsColumn && !formItem.column) {
+      return this.getFormattedValue(
+        formItem?.type,
+        arg.value,
+        formData[arg.value]
+      );
+    }
+
+    // 子表元件 = 子表元件
+    if (targetIsColumn && formItem.column) {
+      const subformData = formData[formItem.parent] ?? [];
+      const row = subformData.find(
+        (rowData: { [key: string]: any }) => rowData["rowId"] === rowId
+      );
+      return !row
+        ? // A 子表元件 = B 子表元件，將 B 子表件視為陣列
+          subformData.reduce((column: any[], row: { [key: string]: any }) => {
+            column.push(
+              this.getFormattedValue(
+                formItem?.type,
+                arg.value,
+                row[formItem.sn]
+              )
+            );
+            return column;
+          }, [] as any[])
+        : // A 子表元件 = A 子表元件，將 A 子表件視為單值
+          this.getFormattedValue(formItem?.type, arg.value, row[formItem.sn]);
+    }
+
+    // TODO: 考慮其他元件
+    return arg.value;
+  }
+
+  getFormattedValue(type: string, arg: string, data: any) {
+    switch (type) {
+      // 單行文字元件
+      case widgetType.input:
+      // 多行文字元件
+      case widgetType.textarea:
+        return removeQuotation(data);
+      // 數字元件
+      case widgetType.number:
+        return truncateMaxNumber(data);
+      // 單選
+      case widgetType.radio:
+        return this.findStringOptionLabel(arg, data);
+      // 複選
+      case widgetType.checkbox:
+        return this.findArrayOptionLabel(arg, data);
+      // 下拉單選
+      case widgetType.select:
+        return this.findStringOptionLabel(arg, data);
+      // 下拉複選
+      case widgetType.selectMultiple:
+        return this.findArrayOptionLabel(arg, data);
+      default:
+        return arg;
     }
   }
 

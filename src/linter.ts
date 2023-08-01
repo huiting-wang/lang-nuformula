@@ -76,7 +76,6 @@ const SYNTAX_trail_to_arg = `(${SYNTAX_empty}|${SYNTAX_comma}|${SYNTAX_paren_r}|
 // 是否為一個函式的合法結尾
 const SYNTAX_end_of_func = `(${SYNTAX_upper_case}|${SYNTAX_paren_l})`;
 
-
 /**
  * 判斷字符類型
  *
@@ -208,15 +207,6 @@ class NuLinter {
           case isSyntax(SYNTAX_slash, this.prevChar):
             continue;
 
-          // 遇到小數點
-          case isSyntax(SYNTAX_dot, this.char):
-            if (
-              !isSyntax(SYNTAX_digit, this.prevChar) ||
-              !isSyntax(SYNTAX_digit, this.nextChar)
-            )
-              throwError({ message: ERROR.syntaxError, pos: pos });
-            continue;
-
           // 存在等待配對的引號
           case this.qStack.length > 0:
             this.waitForQuote(pos);
@@ -225,6 +215,15 @@ class NuLinter {
           // 遇到尚未配對的引號
           case !this.qStack.length && isSyntax(SYNTAX_quote, this.char):
             this.meetQuote(pos);
+            continue;
+
+          // 遇到小數點
+          case isSyntax(SYNTAX_dot, this.char):
+            if (
+              !isSyntax(SYNTAX_digit, this.prevChar) ||
+              !isSyntax(SYNTAX_digit, this.nextChar)
+            )
+              throwError({ message: ERROR.syntaxError, pos: pos });
             continue;
 
           // 存在等待配對的表單項目

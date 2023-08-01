@@ -49,16 +49,18 @@ const { default: evaluationTestCase } = await import("./evaluation.json", {
   assert: { type: "json" },
 });
 
-
 nuformulaEvaluation.init(formatFormItems(testFormItems));
 describe("evaluation", () => {
   Object.entries(evaluationTestCase).forEach(([name, cases]) => {
     describe(name, () => {
       cases.forEach((test) => {
-        const { formula, answer, postfix } = test;
+        const { assignTarget, formula, answer, postfix, row } = test;
         it(formula, () => {
-          const evaMethod = nuformulaEvaluation.getEvaluation(postfix);
-          const result = evaMethod(testFormData);
+          const evaMethod = nuformulaEvaluation.getEvaluation(
+            postfix,
+            assignTarget,
+          );
+          const result = evaMethod(testFormData, row);
           assert.equal(result, answer === "NaN" ? NaN : answer);
         });
       });

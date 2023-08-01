@@ -3,6 +3,7 @@
     {
       "formula": "=100",
       "answer": 100,
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "number", "op": "operand", "value": 100 },
         {
@@ -16,6 +17,7 @@
     {
       "formula": "=+20",
       "answer": 20,
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "number", "op": "operand", "value": 20 },
         {
@@ -29,6 +31,7 @@
     {
       "formula": "=-10",
       "answer": -10,
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "number", "op": "operand", "value": -10 },
         {
@@ -42,6 +45,7 @@
     {
       "formula": "=18.18272",
       "answer": 18.1827,
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "number", "op": "operand", "value": 18.18272 },
         {
@@ -55,6 +59,7 @@
     {
       "formula": "=726.19878",
       "answer": 726.1988,
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "number", "op": "operand", "value": 726.19878 },
         {
@@ -68,6 +73,7 @@
     {
       "formula": "=35.99999",
       "answer": 36,
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "number", "op": "operand", "value": 35.99999 },
         {
@@ -83,6 +89,7 @@
     {
       "formula": "=1+2",
       "answer": 3,
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "number", "op": "operand", "value": 1 },
         { "type": "number", "op": "operand", "value": 2 },
@@ -98,6 +105,7 @@
     {
       "formula": "=1+2+3",
       "answer": 6,
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "number", "op": "operand", "value": 1 },
         { "type": "number", "op": "operand", "value": 2 },
@@ -115,6 +123,7 @@
     {
       "formula": "=99999999999+1",
       "answer": 99999999999.9999,
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "number", "op": "operand", "value": 99999999999 },
         { "type": "number", "op": "operand", "value": 1 },
@@ -130,6 +139,7 @@
     {
       "formula": "=100000000000+100000000000",
       "answer": 99999999999.9999,
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "number", "op": "operand", "value": 100000000000 },
         { "type": "number", "op": "operand", "value": 100000000000 },
@@ -145,6 +155,7 @@
     {
       "formula": "=12345678901+0.1234",
       "answer": 12345678901.1234,
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "number", "op": "operand", "value": 12345678901 },
         { "type": "number", "op": "operand", "value": 0.1234 },
@@ -160,6 +171,7 @@
     {
       "formula": "=0.001+0.0091",
       "answer": 0.0101,
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "number", "op": "operand", "value": 0.001 },
         { "type": "number", "op": "operand", "value": 0.0091 },
@@ -175,6 +187,7 @@
     {
       "formula": "=0.1234+0.00009",
       "answer": 0.1235,
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "number", "op": "operand", "value": 0.1234 },
         { "type": "number", "op": "operand", "value": 0.00009 },
@@ -190,6 +203,7 @@
     {
       "formula": "=0.00001+0.00001",
       "answer": 0,
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "number", "op": "operand", "value": 0.00001 },
         { "type": "number", "op": "operand", "value": 0.00001 },
@@ -205,6 +219,7 @@
     {
       "formula": "=\"這是字串\"+100",
       "answer": "這是字串100",
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "constant", "op": "operand", "value": "這是字串" },
         { "type": "number", "op": "operand", "value": 100 },
@@ -220,6 +235,7 @@
     {
       "formula": "=+20+100",
       "answer": 120,
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "number", "op": "operand", "value": 20 },
         { "type": "number", "op": "operand", "value": 100 },
@@ -235,6 +251,7 @@
     {
       "formula": "=38+",
       "answer": "NaN",
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "number", "op": "operand", "value": 38 },
         { "type": "math", "op": "operator", "value": "add", "argCount": 2 },
@@ -251,6 +268,7 @@
     {
       "formula": "=100-70",
       "answer": 30,
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "number", "op": "operand", "value": 100 },
         { "type": "number", "op": "operand", "value": 70 },
@@ -271,6 +289,7 @@
     {
       "formula": "=100-70-10",
       "answer": 20,
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "number", "op": "operand", "value": 100 },
         { "type": "number", "op": "operand", "value": 70 },
@@ -298,6 +317,7 @@
     {
       "formula": "=10-25",
       "answer": -15,
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "number", "op": "operand", "value": 10 },
         { "type": "number", "op": "operand", "value": 25 },
@@ -318,6 +338,7 @@
     {
       "formula": "=0.0901-0.0102",
       "answer": 0.0799,
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "number", "op": "operand", "value": 0.0901 },
         { "type": "number", "op": "operand", "value": 0.0102 },
@@ -338,6 +359,7 @@
     {
       "formula": "=0.1-0.09999",
       "answer": 0,
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "number", "op": "operand", "value": 0.1 },
         { "type": "number", "op": "operand", "value": 0.09999 },
@@ -358,6 +380,7 @@
     {
       "formula": "=0.2-0.00345",
       "answer": 0.1965,
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "number", "op": "operand", "value": 0.2 },
         { "type": "number", "op": "operand", "value": 0.00345 },
@@ -378,6 +401,7 @@
     {
       "formula": "=-99999999999-1",
       "answer": -99999999999.9999,
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "number", "op": "operand", "value": -99999999999 },
         { "type": "number", "op": "operand", "value": 1 },
@@ -398,6 +422,7 @@
     {
       "formula": "=100--20",
       "answer": 120,
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "number", "op": "operand", "value": 100 },
         { "type": "number", "op": "operand", "value": -20 },
@@ -418,6 +443,7 @@
     {
       "formula": "=100-\"這是字串\"",
       "answer": "NaN",
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "number", "op": "operand", "value": 100 },
         { "type": "constant", "op": "operand", "value": "這是字串" },
@@ -438,6 +464,7 @@
     {
       "formula": "=38-",
       "answer": "NaN",
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "number", "op": "operand", "value": 38 },
         {
@@ -459,6 +486,7 @@
     {
       "formula": "=2*3",
       "answer": 6,
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "number", "op": "operand", "value": 2 },
         { "type": "number", "op": "operand", "value": 3 },
@@ -474,6 +502,7 @@
     {
       "formula": "=2*3*4",
       "answer": 24,
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "number", "op": "operand", "value": 2 },
         { "type": "number", "op": "operand", "value": 3 },
@@ -491,6 +520,7 @@
     {
       "formula": "=0.2345*13",
       "answer": 3.0485,
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "number", "op": "operand", "value": 0.2345 },
         { "type": "number", "op": "operand", "value": 13 },
@@ -506,6 +536,7 @@
     {
       "formula": "=100000*1000000",
       "answer": 99999999999.9999,
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "number", "op": "operand", "value": 100000 },
         { "type": "number", "op": "operand", "value": 1000000 },
@@ -521,6 +552,7 @@
     {
       "formula": "=100*\"這是字串\"",
       "answer": "NaN",
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "number", "op": "operand", "value": 100 },
         { "type": "constant", "op": "operand", "value": "這是字串" },
@@ -536,6 +568,7 @@
     {
       "formula": "=38*",
       "answer": "NaN",
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "number", "op": "operand", "value": 38 },
         { "type": "math", "op": "operator", "value": "time", "argCount": 2 },
@@ -550,6 +583,7 @@
     {
       "formula": "=*38",
       "answer": "NaN",
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "number", "op": "operand", "value": 38 },
         { "type": "math", "op": "operator", "value": "time", "argCount": 2 },
@@ -566,6 +600,7 @@
     {
       "formula": "=12/3",
       "answer": 4,
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "number", "op": "operand", "value": 12 },
         { "type": "number", "op": "operand", "value": 3 },
@@ -581,6 +616,7 @@
     {
       "formula": "=12/3/2",
       "answer": 2,
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "number", "op": "operand", "value": 12 },
         { "type": "number", "op": "operand", "value": 3 },
@@ -598,6 +634,7 @@
     {
       "formula": "=1/3",
       "answer": 0.3333,
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "number", "op": "operand", "value": 1 },
         { "type": "number", "op": "operand", "value": 3 },
@@ -613,6 +650,7 @@
     {
       "formula": "=10000000/0.0001",
       "answer": 99999999999.9999,
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "number", "op": "operand", "value": 10000000 },
         { "type": "number", "op": "operand", "value": 0.0001 },
@@ -628,6 +666,7 @@
     {
       "formula": "=100/0",
       "answer": "NaN",
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "number", "op": "operand", "value": 100 },
         { "type": "number", "op": "operand", "value": 0 },
@@ -643,6 +682,7 @@
     {
       "formula": "=100/\"這是字串\"",
       "answer": "NaN",
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "number", "op": "operand", "value": 100 },
         { "type": "constant", "op": "operand", "value": "這是字串" },
@@ -658,6 +698,7 @@
     {
       "formula": "=\"這是字串\"/100",
       "answer": "NaN",
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "constant", "op": "operand", "value": "這是字串" },
         { "type": "number", "op": "operand", "value": 100 },
@@ -673,6 +714,7 @@
     {
       "formula": "=38/",
       "answer": "NaN",
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "number", "op": "operand", "value": 38 },
         { "type": "math", "op": "operator", "value": "divide", "argCount": 2 },
@@ -687,6 +729,7 @@
     {
       "formula": "=/38",
       "answer": "NaN",
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "number", "op": "operand", "value": 38 },
         { "type": "math", "op": "operator", "value": "divide", "argCount": 2 },
@@ -703,6 +746,7 @@
     {
       "formula": "=10+2*3",
       "answer": 16,
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "number", "op": "operand", "value": 10 },
         { "type": "number", "op": "operand", "value": 2 },
@@ -720,6 +764,7 @@
     {
       "formula": "=(10+2)*3",
       "answer": 36,
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "number", "op": "operand", "value": 10 },
         { "type": "number", "op": "operand", "value": 2 },
@@ -737,6 +782,7 @@
     {
       "formula": "=10*2+3",
       "answer": 23,
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "number", "op": "operand", "value": 10 },
         { "type": "number", "op": "operand", "value": 2 },
@@ -754,6 +800,7 @@
     {
       "formula": "=10*(2+3)",
       "answer": 50,
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "number", "op": "operand", "value": 10 },
         { "type": "number", "op": "operand", "value": 2 },
@@ -771,6 +818,7 @@
     {
       "formula": "=99999999998+99999999999-99999999998",
       "answer": 1.9999,
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "number", "op": "operand", "value": 99999999998 },
         { "type": "number", "op": "operand", "value": 99999999999 },
@@ -793,6 +841,7 @@
     {
       "formula": "=9/3*(1+2)",
       "answer": 9,
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "number", "op": "operand", "value": 9 },
         { "type": "number", "op": "operand", "value": 3 },
@@ -814,6 +863,7 @@
     {
       "formula": "={1ee3015f-0c65-6fea-b872-0242a3ee6533}",
       "answer": "單行文字",
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         {
           "type": "item",
@@ -831,6 +881,7 @@
     {
       "formula": "={1ee3015f-0c66-612a-ba5c-0242a3ee6533}",
       "answer": "多行文字",
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         {
           "type": "item",
@@ -848,6 +899,7 @@
     {
       "formula": "={1ee3015f-0c66-61de-9d33-0242a3ee6533}",
       "answer": 1000,
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         {
           "type": "item",
@@ -865,6 +917,7 @@
     {
       "formula": "={1ee3015f-0c66-6288-89f7-0242a3ee6533}",
       "answer": "選項一",
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         {
           "type": "item",
@@ -882,6 +935,7 @@
     {
       "formula": "=CONCAT(\"複選值為：\",{1ee3015f-0c66-631e-b93b-0242a3ee6533})",
       "answer": "複選值為：選項一,選項二,其他",
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "constant", "op": "operand", "value": "複選值為：" },
         {
@@ -906,6 +960,7 @@
     {
       "formula": "={1ee3015f-0c66-63be-a7aa-0242a3ee6533}",
       "answer": "選項一",
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         {
           "type": "item",
@@ -923,6 +978,7 @@
     {
       "formula": "=CONCAT(\"下拉複選值為：\",{1ee3015f-0c66-6454-bdfa-0242a3ee6533})",
       "answer": "下拉複選值為：選項一,選項二",
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         { "type": "constant", "op": "operand", "value": "下拉複選值為：" },
         {
@@ -943,12 +999,102 @@
           "argCount": 1
         }
       ]
+    },
+    {
+      "formula": "=CONCAT(\"普通元件 = 子表.單行文字：\",{1ee30164-c5e8-6134-a1c4-0242a3ee6533})",
+      "answer": "普通元件 = 子表.單行文字：單行文字(子)-1,單行文字(子)-2,單行文字(子)-3",
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
+      "postfix": [
+        {
+          "type": "constant",
+          "op": "operand",
+          "value": "普通元件 = 子表.單行文字："
+        },
+        {
+          "type": "item",
+          "op": "operand",
+          "value": "1ee30164-c5e8-6134-a1c4-0242a3ee6533"
+        },
+        {
+          "type": "function",
+          "op": "operator",
+          "value": "concat",
+          "argCount": 2
+        },
+        {
+          "type": "function",
+          "op": "operator",
+          "value": "equal",
+          "argCount": 1
+        }
+      ]
+    },
+    {
+      "formula": "=CONCAT(\"子表元件 = 普通元件：\",{1ee3015f-0c65-6fea-b872-0242a3ee6533})",
+      "answer": "子表元件 = 普通元件：單行文字",
+      "assignTarget": "1ee30164-c5e8-6134-a1c4-0242a3ee6533",
+      "row": "row-18eda600-2575-4502-b477-4208d59cb24e",
+      "postfix": [
+        {
+          "type": "constant",
+          "op": "operand",
+          "value": "子表元件 = 普通元件："
+        },
+        {
+          "type": "item",
+          "op": "operand",
+          "value": "1ee3015f-0c65-6fea-b872-0242a3ee6533"
+        },
+        {
+          "type": "function",
+          "op": "operator",
+          "value": "concat",
+          "argCount": 2
+        },
+        {
+          "type": "function",
+          "op": "operator",
+          "value": "equal",
+          "argCount": 1
+        }
+      ]
+    },
+    {
+      "formula": "=CONCAT(\"子表元件 = 子表元件：\",{1ee30164-c5e8-61e8-8687-0242a3ee6533})",
+      "answer": "子表元件 = 子表元件：多行文字(子)-2",
+      "assignTarget": "1ee30164-c5e8-6134-a1c4-0242a3ee6533",
+      "row": "row-c986311d-f396-45e4-a68a-b4346429bea4",
+      "postfix": [
+        {
+          "type": "constant",
+          "op": "operand",
+          "value": "子表元件 = 子表元件："
+        },
+        {
+          "type": "item",
+          "op": "operand",
+          "value": "1ee30164-c5e8-61e8-8687-0242a3ee6533"
+        },
+        {
+          "type": "function",
+          "op": "operator",
+          "value": "concat",
+          "argCount": 2
+        },
+        {
+          "type": "function",
+          "op": "operator",
+          "value": "equal",
+          "argCount": 1
+        }
+      ]
     }
   ],
   "complexFormItem": [
     {
       "formula": "={1ee3015f-0c66-61de-9d33-0242a3ee6533}+200",
       "answer": 1200,
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         {
           "type": "item",
@@ -968,11 +1114,47 @@
     {
       "formula": "={1ee3015f-0c66-6454-bdfa-0242a3ee6533}",
       "answer": "選項一,選項二",
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
       "postfix": [
         {
           "type": "item",
           "op": "operand",
           "value": "1ee3015f-0c66-6454-bdfa-0242a3ee6533"
+        },
+        {
+          "type": "function",
+          "op": "operator",
+          "value": "equal",
+          "argCount": 1
+        }
+      ]
+    },
+    {
+      "formula": "=CONCAT(\"普通元件 = SUM(子表數字)：\",SUM({1ee3015f-fc66-61de-9d33-0242a3ee6533}))",
+      "answer": "普通元件 = SUM(子表數字)：600",
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
+      "postfix": [
+        {
+          "type": "constant",
+          "op": "operand",
+          "value": "普通元件 = SUM(子表數字)："
+        },
+        {
+          "type": "item",
+          "op": "operand",
+          "value": "1ee3015f-fc66-61de-9d33-0242a3ee6533"
+        },
+        {
+          "type": "function",
+          "op": "operator",
+          "value": "sum",
+          "argCount": 1
+        },
+        {
+          "type": "function",
+          "op": "operator",
+          "value": "concat",
+          "argCount": 2
         },
         {
           "type": "function",
