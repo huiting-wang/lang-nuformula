@@ -1,5 +1,5 @@
 import { truncateMaxNumber, isNumber, isEmptyValue } from "./utils";
-import { NuEvalutionLib } from "./evaluation-lib";
+import { NuEvaluationLib } from "./evaluation-lib";
 import { Item, opType, argType, widgetType } from "./constants";
 
 // 參數物件格式
@@ -75,9 +75,9 @@ class FormulaEvaluation {
               argumentStack.unshift(this.getValue(operand, scopedData));
           }
           // 將這些運算元與運算子進行運算
-          evaResult = NuEvalutionLib[
-            currentArg.value as keyof typeof NuEvalutionLib
-          ](argumentStack) as any;
+          evaResult = NuEvaluationLib[
+            currentArg.value as keyof typeof NuEvaluationLib
+          ](argumentStack) ;
           // 將結果再次推回 postfix 佇列
           operandStack.push({
             op: opType.operand,

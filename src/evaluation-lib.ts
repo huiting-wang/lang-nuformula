@@ -10,7 +10,7 @@ import { opName, funcName } from "./constants";
  * ==================================
  */
 
-export const NuEvalutionLib = {
+export const NuEvaluationLib = {
   //#region 算術運算子
   // 計算原則：先計算再 round up
   /**
