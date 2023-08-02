@@ -27,6 +27,7 @@ export function formatFormItems(formItems: { [key: string]: any }): {
       sn: formItem.sn,
       type: formItem.type,
       column: isColumn,
+      parent: formItem.parent?.sn ?? "",
       label: `${subformLabel}${formItem.options.label ?? ""}`,
       options: getOptions(formItem),
     };

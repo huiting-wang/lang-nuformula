@@ -10,7 +10,7 @@ import { opName, funcName } from "./constants";
  * ==================================
  */
 
-export const NuEvalutionLib = {
+export const NuEvaluationLib = {
   //#region 算術運算子
   // 計算原則：先計算再 round up
   /**
@@ -151,7 +151,9 @@ export const NuEvalutionLib = {
    *  - 接受參數數量: 1
    */
   [opName.equal]: (args: any[]): any => {
-    return isArray(args[0]) ? args[0].join(","): args[0];
+    return isArray(args[0])
+      ? args[0].filter((arg: any) => !isEmptyValue(arg)).join(",")
+      : args[0];
   },
   /**
    * SUM，使用此函數來加總儲存格中的值
@@ -164,7 +166,18 @@ export const NuEvalutionLib = {
    * @see https://support.microsoft.com/zh-tw/office/043e1c7d-7726-4e80-8f32-07b23e057f89
    */
   [funcName.SUM]: (args: any[]): number => {
-    return args.reduce((sum: number, arg: any) => sum + (arg as number), 0);
+    return args.reduce((sum: number, arg: any) => {
+      if (isArray(arg)) {
+        return (
+          sum +
+          arg.reduce(
+            (partialSum: number, arg: any) => partialSum + (arg as number),
+            0
+          )
+        );
+      }
+      return sum + (arg as number);
+    }, 0);
   },
   /**
    * IF，使用此函數以在條件符合時傳回一個值，並在條件不符合時傳回另一個值。
@@ -191,9 +204,7 @@ export const NuEvalutionLib = {
    * @see https://support.microsoft.com/zh-tw/office/9b1a9a3f-94ff-41af-9736-694cbd6b4ca2
    */
   [funcName.CONCAT]: (args: any[]): string => {
-    return args
-      .map((arg) => (isArray(arg) ? arg.join(",") : arg))
-      .join("");
+    return args.map((arg) => (isArray(arg) ? arg.join(",") : arg)).join("");
   },
   /**
    * AVERAGE，傳回引數的平均值
@@ -206,9 +217,20 @@ export const NuEvalutionLib = {
    * @see https://support.microsoft.com/zh-tw/office/047bac88-d466-426c-a32b-8f33eb960cf6
    */
   [funcName.AVERAGE]: (args: any[]): number => {
-    return (
-      args.reduce((sum: number, arg: any) => sum + (arg as number), 0) /
-      args.length
-    );
+    let count = 0;
+    const sum = args.reduce((sum: number, arg: any) => {
+      if (isArray(arg)) {
+        return (
+          sum +
+          arg.reduce((partialSum: number, arg: any) => {
+            count++;
+            return partialSum + (arg as number);
+          }, 0)
+        );
+      }
+      count++;
+      return sum + (arg as number);
+    }, 0);
+    return sum / count;
   },
 };
