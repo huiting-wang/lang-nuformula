@@ -11,6 +11,11 @@ import * as path from "path";
 import * as assert from "assert";
 import { testFormItems, testFormData } from "./form-data.js";
 
+// 格式化表單項目
+const formItems = formatFormItems(testFormItems)
+
+console.log(formItems)
+
 // 測試 lezer grammar
 let languageTestCase = "language.txt";
 let languageTest = path.join(
@@ -31,7 +36,7 @@ const { default: linterTestCase } = await import("./linter.json", {
   assert: { type: "json" },
 });
 describe("linter", () => {
-  nuLint.init(Object.keys(testFormItems))
+  nuLint.init(Object.keys(formItems))
   Object.entries(linterTestCase).forEach(([name, cases]) => {
     describe(name, () => {
       cases.forEach((test) => {
@@ -50,7 +55,7 @@ const { default: evaluationTestCase } = await import("./evaluation.json", {
   assert: { type: "json" },
 });
 
-nuformulaEvaluation.init(formatFormItems(testFormItems));
+nuformulaEvaluation.init(formItems);
 describe("evaluation", () => {
   Object.entries(evaluationTestCase).forEach(([name, cases]) => {
     describe(name, () => {

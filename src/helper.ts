@@ -15,7 +15,12 @@ function getOptions(formItem: any): { value: string; label: string }[] {
   }
 }
 
-export function formatFormItems(formItems: { [key: string]: any }): {
+export function formatFormItems(
+  formItems: { [key: string]: any },
+  config?: {
+    summaryLabel?: string;
+  }
+): {
   [key: string]: Item;
 } {
   return Object.values(formItems).reduce((output, formItem) => {
@@ -31,6 +36,24 @@ export function formatFormItems(formItems: { [key: string]: any }): {
       label: `${subformLabel}${formItem.options.label ?? ""}`,
       options: getOptions(formItem),
     };
+
+    // 新增子表 - 合計欄位 元件
+    (formItem.options?.summary ?? []).forEach(
+      (number: { sn: string; type: string; [key: string]: any }) => {
+        Object.assign(output, {
+          [`${number.sn}-sum`]: {
+            sn: `${number.sn}-sum`,
+            type: number.type,
+            column: false,
+            parent: formItem.sn,
+            label: `${formItem.options.label}.${
+              formItems[number.sn]?.options?.label
+            }-${config?.summaryLabel ?? "合計欄位"}`,
+          },
+        });
+      }
+    );
+
     return Object.assign(output, { [formItem.sn]: item });
   }, {});
 }

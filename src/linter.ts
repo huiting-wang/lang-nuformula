@@ -48,6 +48,7 @@ const SYNTAX_paren_r = `(\\))`; // ------------ 右括號 )
 const SYNTAX_bracket_l = `(\\{)`; // ---------- 左大括號 {
 const SYNTAX_bracket_r = `(\\})`; // ---------- 右大括號 }
 const SYNTAX_hex = `[0-9a-fA-F]`; // ---------- 十六進位字符
+const SYNTAX_summary = `sum`; // -------------- 合計欄位
 
 // 是否為註冊的函式
 const SYNTAX_valid_func = `(${Object.keys(funcName).join("|")})`;
@@ -55,7 +56,7 @@ const SYNTAX_valid_func = `(${Object.keys(funcName).join("|")})`;
 const SYNTAX_valid_item = `(${Object.values(widgetType).join("|")})`;
 
 // 表單項目序號
-const SYNTAX_item = `^(${SYNTAX_valid_item}\\-)?${SYNTAX_hex}{8}\\-${SYNTAX_hex}{4}\\-${SYNTAX_hex}{4}\\-${SYNTAX_hex}{4}\\-${SYNTAX_hex}{12}$`;
+const SYNTAX_item = `^(${SYNTAX_valid_item}\\-)?${SYNTAX_hex}{8}\\-${SYNTAX_hex}{4}\\-${SYNTAX_hex}{4}\\-${SYNTAX_hex}{4}\\-${SYNTAX_hex}{12}(\\-${SYNTAX_summary})?$`;
 // 正負符號
 const SYNTAX_sign = `(${SYNTAX_plus}|${SYNTAX_minus})`;
 // 數學運算符號

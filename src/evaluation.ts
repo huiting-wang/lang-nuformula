@@ -156,6 +156,16 @@ class FormulaEvaluation {
       ? false
       : (this.formItems[assignTarget] as Item)?.column;
 
+    // = 合計欄位
+    if (/\-sum$/.test(formItem.sn)) {
+      const subformData = formData[formItem.parent] ?? [];
+      const columnSn = formItem.sn.replace(/\-sum$/, "");
+      return subformData.reduce((sum: number, row: { [key: string]: any }) => {
+        if (isNumber(row[columnSn])) return (sum += row[columnSn]);
+        return sum;
+      }, 0);
+    }
+
     // 普通元件 = 普通元件
     if (!targetIsColumn && !formItem.column) {
       return this.getFormattedValue(

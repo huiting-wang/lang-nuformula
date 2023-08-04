@@ -1088,6 +1088,24 @@
           "argCount": 1
         }
       ]
+    },
+    {
+      "formula": "={1ee3015f-fc66-61de-9d33-0242a3ee6533-sum}",
+      "answer": "600",
+      "assignTarget": "input-1ee3015f-0c65-6fea-b872-0242a3ee6533",
+      "postfix": [
+        {
+          "type": "item",
+          "op": "operand",
+          "value": "1ee3015f-fc66-61de-9d33-0242a3ee6533-sum"
+        },
+        {
+          "type": "function",
+          "op": "operator",
+          "value": "equal",
+          "argCount": 1
+        }
+      ]
     }
   ],
   "complexFormItem": [
