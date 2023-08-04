@@ -135,6 +135,7 @@ const throwError = (errorMessage: ErrorMessage) => {
 
 class NuLinter {
   text: string; // -------------------- 公式字串
+  formItemsKeys: string[]; // --------- 表單元件鍵值
   private length: number; // ---------- 公式字串長度
   private prevChar: string; // -------- 前一字符
   private char: string; // ------------ 當前字符
@@ -149,6 +150,8 @@ class NuLinter {
   constructor() {
     // 公式字串長度
     this.length = 0 as number;
+    // 表單元件鍵值
+    this.formItemsKeys = [];
     // 公式字串、前一字符、當前字符、後一字符、表單元件項目、函式名稱
     this.text =
       this.prevChar =
@@ -164,6 +167,12 @@ class NuLinter {
     // 函式參數佇列
     this.fStack = [] as FuncArg[];
   }
+
+  init(formItemsKeys: string[]) {
+    // 表單元件鍵值
+    this.formItemsKeys = formItemsKeys;
+  }
+
   /**
    * 重置 linter
    *
@@ -449,6 +458,12 @@ class NuLinter {
         length: this.itemSn.length + 1,
       });
     }
+
+    //  遇到失效的元件
+    if (!this.formItemsKeys.includes(this.itemSn)) {
+      throwError({ message: ERROR.invalidItem, pos: pos });
+    }
+
     // 檢查下一個字符是否為一個參數的合法後綴
     if (!isSyntax(SYNTAX_trail_to_arg, this.nextChar))
       throwError({ message: ERROR.missingOperator, pos });
@@ -718,9 +733,13 @@ class NuLinter {
 
 export const nuLint = new NuLinter();
 
-export const nuformulaLinter = (callback: (error: Diagnostic) => void) => {
+export const nuformulaLinter = (
+  formItemsKeys: string[],
+  callback: (error: Diagnostic) => void
+) => {
   return linter((view: EditorView) => {
     const { state } = view;
+    nuLint.init(formItemsKeys);
     const error = nuLint.verify(state.doc.toString()) as Diagnostic;
     callback(error);
     if (error?.severity) return [error];

@@ -31,6 +31,7 @@ const { default: linterTestCase } = await import("./linter.json", {
   assert: { type: "json" },
 });
 describe("linter", () => {
+  nuLint.init(Object.keys(testFormItems))
   Object.entries(linterTestCase).forEach(([name, cases]) => {
     describe(name, () => {
       cases.forEach((test) => {
