@@ -11,14 +11,14 @@
   },
   "dependencies": {
     "codemirror": "^6.0.1",
-    "codemirror-lang-nuformula": "^0.2.15",
     "vue": "^3.3.4"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.2.3",
-    "sass": "^1.64.1",
+    "codemirror-lang-nuformula": "^0.2.33",
+    "sass": "^1.65.1",
     "typescript": "^5.0.2",
-    "vite": "^4.4.7",
+    "vite": "^4.4.9",
     "vue-tsc": "^1.8.8"
   }
 }

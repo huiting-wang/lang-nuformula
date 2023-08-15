@@ -31,53 +31,6 @@ const formItems = reactive({
     },
     "list": "1ee2c5ad-42c7-6fc2-93ea-0242a3ee6533"
   },
-  "1ee2c594-fdac-6176-a6d8-0242a3ee6533": {
-    "sn": "1ee2c594-fdac-6176-a6d8-0242a3ee6533",
-    "type": "subform",
-    "prevExisted": false,
-    "parent": {
-      "sn": "1ee13e24-de80-6db8-ad3c-0242994894d2",
-      "type": "form"
-    },
-    "category": "advanced",
-    "options": {
-      "fixed": 0,
-      "label": "子表",
-      "noAdd": false,
-      "noSort": false,
-      "summary": [],
-      "disabled": false,
-      "required": false,
-      "defaultData": [],
-      "disabledDefault": false,
-      "noDeleteDefault": false
-    },
-    "subcolumns": "1ee2c5ad-42c8-6148-8ebb-0242a3ee6533"
-  },
-  "1ee2c594-fdac-637e-a99b-0242a3ee6533": {
-    "sn": "1ee2c594-fdac-637e-a99b-0242a3ee6533",
-    "type": "input",
-    "prevExisted": false,
-    "parent": {
-      "sn": "1ee2c594-fdac-6176-a6d8-0242a3ee6533",
-      "type": "subform",
-      "category": "advanced"
-    },
-    "category": "basic",
-    "options": {
-      "label": "子表內的單行文字",
-      "width": "default",
-      "maxLen": null,
-      "pattern": "none",
-      "disabled": false,
-      "required": false,
-      "placeholder": "請輸入",
-      "defaultValue": "",
-      "noDuplicated": false,
-      "subformDisabled": false,
-      "noSubformDuplicated": false
-    }
-  },
   "1ee2c428-8260-60a2-af11-0242a3ee6533": {
     "sn": "1ee2c428-8260-60a2-af11-0242a3ee6533",
     "type": "input",
