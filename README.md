@@ -47,8 +47,9 @@ import {
   nuformulaLinter,
   nuformulaItemWidget,
   nuformulaAutocomplete,
+  formatFormItems,
 } from "codemirror-lang-nuformula";
-import { ref, onMounted, reactive } from "vue";
+import { ref, onMounted, reactive, computed } from "vue";
 
 const props = defineProps({
   // 公式綁定數值
@@ -148,6 +149,7 @@ import {
   nuformulaLinter,
   nuformulaItemWidget,
   nuformulaAutocomplete,
+  formatFormItems,
 } from "codemirror-lang-nuformula";
 import { isEmptyValue } from "@/utils";
 
@@ -156,7 +158,7 @@ export default {
   provide() {
     return {
       // 可用表單元件
-      formItems: this.formItems,
+      formItems: this.formattedFormItems,
       // 可用函式運算子
       functions: Object.keys(funcName),
     };
@@ -178,6 +180,12 @@ export default {
       // 錯誤訊息
       formulaError: "",
     };
+  },
+  computed: {
+    // 格式化表單元件
+    formattedFormItems() {
+      return formatFormItems(this.formItems);
+    },
   },
   created() {
     // 初始編輯器
@@ -207,11 +215,13 @@ export default {
           // 配置語法標示
           nuformulaHighlightStyle(),
           // linter 插件
-          nuformulaLinter(this.handleEditorUpdate),
+          nuformulaLinter(
+            Object.keys(this.formattedFormItems),
+            this.handleEditorUpdate),
           // 表單項目標記插件
-          nuformulaItemWidget(this.formItems),
+          nuformulaItemWidget(this.formattedFormItems),
           // 自動選字插件
-          nuformulaAutocomplete(this.formItems),
+          nuformulaAutocomplete(this.formattedFormItems),
         ],
       });
     },
@@ -223,9 +233,6 @@ export default {
       this.view = new EditorView({
         state: this.state,
         parent: this.$refs.editor,
-      });
-      this.$nextTick(() => {
-        this.view.focus();
       });
     },
     /**
