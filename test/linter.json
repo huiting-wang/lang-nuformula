@@ -18,7 +18,7 @@
         "from": 0,
         "to": 23,
         "severity": "error",
-        "message": "語法錯誤，不合法的項目元件: invalidItem"
+        "message": "無效的項目元件"
       }
     },
     {
@@ -27,7 +27,7 @@
         "from": 37,
         "to": 38,
         "severity": "error",
-        "message": "語法錯誤，不合法的項目元件: invalidItem"
+        "message": "無效的項目元件"
       }
     }
   ],
@@ -48,7 +48,7 @@
         "from": 7,
         "to": 7,
         "severity": "error",
-        "message": "語法錯誤，缺少標示符: missingOperator"
+        "message": "缺少標示符"
       }
     },
     {
@@ -57,7 +57,7 @@
         "from": 7,
         "to": 7,
         "severity": "error",
-        "message": "語法錯誤，缺少標示符: missingOperator"
+        "message": "缺少標示符"
       }
     },
     {
@@ -66,7 +66,7 @@
         "from": 9,
         "to": 9,
         "severity": "error",
-        "message": "語法錯誤，缺少標示符: missingOperator"
+        "message": "缺少標示符"
       }
     }
   ],
@@ -77,7 +77,7 @@
         "from": 0,
         "to": 4,
         "severity": "error",
-        "message": "語法錯誤，IF 錯誤的參數數量: invalidArgCount"
+        "message": "IF 參數數量不符合函數要求"
       }
     },
     {
@@ -98,7 +98,7 @@
         "from": 0,
         "to": 21,
         "severity": "error",
-        "message": "語法錯誤，公式 錯誤的參數數量: invalidArgCount"
+        "message": "公式 參數數量不符合函數要求"
       }
     }
   ]

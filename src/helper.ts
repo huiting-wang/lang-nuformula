@@ -26,7 +26,7 @@ export function formatFormItems(
   return Object.values(formItems).reduce((output, formItem) => {
     const isColumn = formItem.parent?.type === "subform";
     const subformLabel = isColumn
-      ? `${formItems[formItem.parent.sn]?.options?.label}.` ?? ""
+      ? `${formItems[formItem.parent.sn]?.options?.label?? ""}.` 
       : "";
     const item = {
       sn: formItem.sn,

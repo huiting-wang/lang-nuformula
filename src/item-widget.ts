@@ -16,7 +16,7 @@ function getUnknownWidget(): Item {
     type: "unknown",
     parent: "",
     column: false,
-    label: "未知的元件"
+    label: "已刪除的元件"
   };
 }
 
