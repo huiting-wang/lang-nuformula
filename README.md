@@ -271,22 +271,22 @@ export default {
   // 表單元件序號
   "sn:`string`": {
     // 表單元件序號
-    "sn": `string`,
+    "sn": "`string`",
     // 表單元件類型
-    "type": `string`,
+    "type": "`string`",
     // 表單元件是否為子表欄位
-    "column": `boolean`,
+    "column": "`boolean`",
     // 表單元件父元件序號
-    "parent": `string`,
+    "parent": "`string`",
     // 表單元件標題
-    "label": `string`,
+    "label": "`string`",
     // 表單元件可選選項 (適用 單選、複選、下拉單選、下拉複選)
      "options": [
       { 
         // 選項標籤
-        "label": `string`, 
+        "label": "`string`", 
         // 選項值
-        "value": `string`
+        "value": "`string`"
       }
     ]
   },
