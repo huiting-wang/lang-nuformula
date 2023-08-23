@@ -244,8 +244,11 @@ onMounted(() => {
     <div class="author">
       <h3>Work in progress</h3>
       <p>YUN-CHIEN-LO</p>
-      <a class="github" href="https://github.com/YUN-CHIEN-LO/lang-nuformula" target="_blank">
+      <a class="link" href="https://github.com/YUN-CHIEN-LO/lang-nuformula" target="_blank">
         <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="github" />
+      </a>
+      <a class="link" href="https://www.npmjs.com/package/codemirror-lang-nuformula" target="_blank">
+        <img src="https://www.svgrepo.com/show/354128/npm.svg" alt="npm" />
       </a>
     </div>
     <FormulaEditor :value="formula" :formItems="formattedFormItems" @change="handleChange" />
@@ -264,14 +267,15 @@ onMounted(() => {
     }
 
     &>p {
-      margin: 0px 8px;
+      margin: 0px;
     }
 
-    & .github {
-      width: 32px;
+    & .link {
+      height: 32px;
+      margin-left: 8px;
 
       &>img {
-        width: 100%;
+        height: 100%;
       }
     }
   }

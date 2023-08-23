@@ -733,7 +733,7 @@ class NuLinter {
 export const nuLint = new NuLinter();
 
 export const nuformulaLinter = (
-  formItems: Item[],
+  formItems: { [key: string]: Item },
   callback: (error: Diagnostic) => void
 ) => {
   return linter((view: EditorView) => {
