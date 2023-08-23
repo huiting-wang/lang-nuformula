@@ -226,7 +226,14 @@ export const testFormItems = {
       label: "子表",
       noAdd: false,
       noSort: false,
-      summary: [],
+      summary: [
+        {
+          sn: "1ee3015f-fc66-61de-9d33-0242a3ee6533",
+          type: "number",
+          category: "basic",
+          label: "數字(子)",
+        },
+      ],
       disabled: false,
       required: false,
       defaultData: [],
@@ -395,7 +402,7 @@ export const testFormData = {
     {
       "1ee30164-c5e8-6134-a1c4-0242a3ee6533": "單行文字(子)-2",
       "1ee30164-c5e8-61e8-8687-0242a3ee6533": "多行文字(子)-2",
-      "1ee3015f-fc66-61de-9d33-0242a3ee6533":200,
+      "1ee3015f-fc66-61de-9d33-0242a3ee6533": 200,
       "1ee30164-c5e8-6292-a38d-0242a3ee6533": "value-1",
       "1ee30164-c5e8-6332-ae92-0242a3ee6533": ["value-1", "value-2"],
       isDefaultRow: false,

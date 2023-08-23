@@ -1,7 +1,7 @@
 import { linter, Diagnostic } from "@codemirror/lint";
 import { isEmptyValue } from "./utils";
 import { EditorView } from "@codemirror/view";
-import { funcName, widgetType } from "./constants";
+import { Item, funcName, widgetType } from "./constants";
 
 // 函式參數紀錄物件格式
 type FuncArg = {
@@ -19,14 +19,14 @@ type ErrorMessage = {
 };
 
 enum ERROR {
-  unmatchedParen, // -------- 括號不對稱
-  unmatchedQuote, // -------- 引號不對稱
-  invalidItem, // ----------- 不合法的項目元件
+  unmatchedParen, // ------- 括號不對稱
+  unmatchedQuote, // ------- 引號不對稱
+  invalidItem, // ---------- 不合法的項目元件
   invalidOperator, // ------ 錯誤的標示符
   missingOperator, // ------ 缺少標示符
   invalidFuncName, // ------ 錯誤的函式
   invalidArgCount, // ------ 錯誤的參數數量
-  syntaxError, // -------------- 語法錯誤
+  syntaxError, // ---------- 語法錯誤
 }
 
 const SYNTAX_empty = `^$`; // ----------------- 空字串
@@ -48,6 +48,7 @@ const SYNTAX_paren_r = `(\\))`; // ------------ 右括號 )
 const SYNTAX_bracket_l = `(\\{)`; // ---------- 左大括號 {
 const SYNTAX_bracket_r = `(\\})`; // ---------- 右大括號 }
 const SYNTAX_hex = `[0-9a-fA-F]`; // ---------- 十六進位字符
+const SYNTAX_summary = `sum`; // -------------- 合計欄位
 
 // 是否為註冊的函式
 const SYNTAX_valid_func = `(${Object.keys(funcName).join("|")})`;
@@ -55,7 +56,7 @@ const SYNTAX_valid_func = `(${Object.keys(funcName).join("|")})`;
 const SYNTAX_valid_item = `(${Object.values(widgetType).join("|")})`;
 
 // 表單項目序號
-const SYNTAX_item = `^(${SYNTAX_valid_item}\\-)?${SYNTAX_hex}{8}\\-${SYNTAX_hex}{4}\\-${SYNTAX_hex}{4}\\-${SYNTAX_hex}{4}\\-${SYNTAX_hex}{12}$`;
+const SYNTAX_item = `^(${SYNTAX_valid_item}\\-)?${SYNTAX_hex}{8}\\-${SYNTAX_hex}{4}\\-${SYNTAX_hex}{4}\\-${SYNTAX_hex}{4}\\-${SYNTAX_hex}{12}(\\-${SYNTAX_summary})?$`;
 // 正負符號
 const SYNTAX_sign = `(${SYNTAX_plus}|${SYNTAX_minus})`;
 // 數學運算符號
@@ -135,6 +136,7 @@ const throwError = (errorMessage: ErrorMessage) => {
 
 class NuLinter {
   text: string; // -------------------- 公式字串
+  formItemsKeys: string[]; // --------- 表單元件鍵值
   private length: number; // ---------- 公式字串長度
   private prevChar: string; // -------- 前一字符
   private char: string; // ------------ 當前字符
@@ -149,6 +151,8 @@ class NuLinter {
   constructor() {
     // 公式字串長度
     this.length = 0 as number;
+    // 表單元件鍵值
+    this.formItemsKeys = [];
     // 公式字串、前一字符、當前字符、後一字符、表單元件項目、函式名稱
     this.text =
       this.prevChar =
@@ -164,6 +168,12 @@ class NuLinter {
     // 函式參數佇列
     this.fStack = [] as FuncArg[];
   }
+
+  init(formItemsKeys: string[]) {
+    // 表單元件鍵值
+    this.formItemsKeys = formItemsKeys;
+  }
+
   /**
    * 重置 linter
    *
@@ -332,7 +342,7 @@ class NuLinter {
           from: fromPos(pos),
           to: toPos(pos + 1),
           severity: "error",
-          message: `語法錯誤，括號不對稱: ${ERROR[errorType]}`,
+          message: `括號不對稱`,
         };
       // 引號不對稱
       case ERROR.unmatchedQuote:
@@ -340,7 +350,7 @@ class NuLinter {
           from: fromPos(pos),
           to: toPos(pos + 1),
           severity: "error",
-          message: `語法錯誤，引號不對稱: ${ERROR[errorType]}`,
+          message: `引號不對稱`,
         };
       // 不合法的項目元件
       case ERROR.invalidItem:
@@ -348,7 +358,7 @@ class NuLinter {
           from: fromPos(pos),
           to: toPos(pos + length),
           severity: "error",
-          message: `語法錯誤，不合法的項目元件: ${ERROR[errorType]}`,
+          message: `無效的項目元件`,
         };
       // 缺少標示符
       case ERROR.missingOperator:
@@ -356,7 +366,7 @@ class NuLinter {
           from: fromPos(pos + 1),
           to: toPos(pos + 1),
           severity: "error",
-          message: `語法錯誤，缺少標示符: ${ERROR[errorType]}`,
+          message: `缺少標示符`,
         };
       // 錯誤的標示符
       case ERROR.invalidOperator:
@@ -364,7 +374,7 @@ class NuLinter {
           from: fromPos(pos),
           to: toPos(pos + length),
           severity: "error",
-          message: `語法錯誤，錯誤的標示符: ${ERROR[errorType]}`,
+          message: `錯誤的標示符`,
         };
       // 錯誤的函式
       case ERROR.invalidFuncName:
@@ -372,7 +382,7 @@ class NuLinter {
           from: fromPos(pos),
           to: toPos(pos + length),
           severity: "error",
-          message: `語法錯誤，錯誤的函式: ${ERROR[errorType]}`,
+          message: `錯誤的函式`,
         };
       // 錯誤的參數數量
       case ERROR.invalidArgCount:
@@ -380,9 +390,7 @@ class NuLinter {
           from: fromPos(pos),
           to: toPos(pos + length),
           severity: "error",
-          message: `語法錯誤，${text ?? "公式"} 錯誤的參數數量: ${
-            ERROR[errorType]
-          }`,
+          message: `${text ?? "公式"} 參數數量不符合函數要求`,
         };
       // 語法錯誤
       case ERROR.syntaxError:
@@ -390,14 +398,14 @@ class NuLinter {
           from: fromPos(pos),
           to: toPos(pos + length),
           severity: "error",
-          message: `語法錯誤，無法識別的字符: ${ERROR[errorType]}`,
+          message: `公式設定異常`,
         };
       default:
         return {
           from: 0,
           to: this.length,
           severity: "error",
-          message: `語法錯誤`,
+          message: `公式設定異常`,
         };
     }
   }
@@ -449,6 +457,12 @@ class NuLinter {
         length: this.itemSn.length + 1,
       });
     }
+
+    //  遇到失效的元件
+    if (!this.formItemsKeys.includes(this.itemSn)) {
+      throwError({ message: ERROR.invalidItem, pos: pos });
+    }
+
     // 檢查下一個字符是否為一個參數的合法後綴
     if (!isSyntax(SYNTAX_trail_to_arg, this.nextChar))
       throwError({ message: ERROR.missingOperator, pos });
@@ -666,7 +680,7 @@ class NuLinter {
     if (!isValidOperator(this.prevChar, this.nextChar))
       throwError({ message: ERROR.invalidOperator, pos: pos });
 
-    const funcArg = this.fStack.pop() as FuncArg | undefined;
+    const funcArg = this.fStack.pop();
 
     if (funcArg === undefined || Object.keys(funcArg).length === 0)
       throwError({
@@ -718,9 +732,13 @@ class NuLinter {
 
 export const nuLint = new NuLinter();
 
-export const nuformulaLinter = (callback: (error: Diagnostic) => void) => {
+export const nuformulaLinter = (
+  formItems: Item[],
+  callback: (error: Diagnostic) => void
+) => {
   return linter((view: EditorView) => {
     const { state } = view;
+    nuLint.init(Object.keys(formItems));
     const error = nuLint.verify(state.doc.toString()) as Diagnostic;
     callback(error);
     if (error?.severity) return [error];

@@ -29,10 +29,14 @@ function setAutocomplete(options: Completion[]) {
 /**
  * 輸出 自動選字 掛件
  *
- * @param {Object} options - 可選選項
+ * @param {Object} formItems - 可選表單元件
+ * @param {Array} customOptions - 自訂提示選項
  * @returns {Extension}
  */
-export function nuformulaAutocomplete(formItems: { [key: string]: Item }) {
+export function nuformulaAutocomplete(
+  formItems: { [key: string]: Item },
+  customOptions: Completion[] = []
+) {
   // 可用函式
   const funcNameList = Object.keys(funcName).map(
     (func: string): Completion => ({
@@ -44,7 +48,9 @@ export function nuformulaAutocomplete(formItems: { [key: string]: Item }) {
 
   // 表單元件
   const itemList = Object.values(formItems)
-    .filter((value: Item) => (Object.values(widgetType) as string[]).includes(value.type))
+    .filter((value: Item) =>
+      (Object.values(widgetType) as string[]).includes(value.type)
+    )
     .map((value: Item) => ({
       label: value.label,
       type: "variable",
@@ -53,7 +59,8 @@ export function nuformulaAutocomplete(formItems: { [key: string]: Item }) {
 
   const autocompleteOptions = ([] as Completion[]).concat(
     funcNameList,
-    itemList
+    itemList,
+    customOptions
   );
 
   return autocompletion({
