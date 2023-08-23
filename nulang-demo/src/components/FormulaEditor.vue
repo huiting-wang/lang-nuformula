@@ -82,7 +82,7 @@ const state = EditorState.create({
     // 配置語法標示
     nuformulaHighlightStyle(),
     // linter 插件
-    nuformulaLinter(Object.keys(props.formItems), handleEditorUpdate),
+    nuformulaLinter(props.formItems, handleEditorUpdate),
     // 表單項目標記插件
     nuformulaItemWidget(props.formItems),
     // 自動選字插件

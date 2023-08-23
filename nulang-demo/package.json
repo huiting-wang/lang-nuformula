@@ -14,9 +14,9 @@
     "vue": "^3.3.4"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^4.2.3",
-    "codemirror-lang-nuformula": "^0.2.33",
-    "sass": "^1.65.1",
+    "@vitejs/plugin-vue": "^4.3.3",
+    "codemirror-lang-nuformula": "^0.2.35",
+    "sass": "^1.66.1",
     "typescript": "^5.0.2",
     "vite": "^4.4.9",
     "vue-tsc": "^1.8.8"
