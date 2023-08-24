@@ -40,6 +40,7 @@ export enum widgetType {
   selectMultiple = "select_multiple", // ---- 下拉複選
 }
 
+// 可用運算子
 export enum opName {
   /* 數學運算子 */
   add = "add", // ---------------------- 加法 (+)

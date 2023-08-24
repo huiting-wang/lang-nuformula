@@ -6,10 +6,34 @@
 
 NuFormula(String)
 
+# String
+
+"123"
+
+===> 
+
+NuFormula(String)
+
 
 # Number
 
 100.31
+
+===> 
+
+NuFormula(Number)
+
+# Number
+
+0.31
+
+===> 
+
+NuFormula(Number)
+
+# Number
+
+100
 
 ===> 
 
@@ -23,6 +47,102 @@ NuFormula(Number)
 ===> 
 
 NuFormula(Item)
+
+# Item
+
+{1ee149af-c328-6a0c-84e2-0242994894d2}
+
+===> 
+
+NuFormula(Item)
+
+# Item
+
+{number-1ee149af-c328-6a0c-84e2-0242994894d2-sum}
+
+===> 
+
+NuFormula(Item)
+
+# Operator Add
+
+10+20
+
+===> 
+
+NuFormula(Number,Operator,Number)
+
+# Operator Subtract
+
+10-20
+
+===> 
+
+NuFormula(Number,Operator,Number)
+
+# Operator Time
+
+10*20
+
+===> 
+
+NuFormula(Number,Operator,Number)
+
+# Operator Divide
+
+10/20
+
+===> 
+
+NuFormula(Number,Operator,Number)
+
+# Operator Greater Than
+
+10>20
+
+===> 
+
+NuFormula(Number,Operator,Number)
+
+# Operator Greater Than Equal To
+
+10>=20
+
+===> 
+
+NuFormula(Number,Operator,Number)
+
+# Operator Less Than
+
+10<20
+
+===> 
+
+NuFormula(Number,Operator,Number)
+
+# Operator Less Than Equal To
+
+10<=20
+
+===> 
+
+NuFormula(Number,Operator,Number)
+
+# Operator Equal To
+
+10=20
+
+===> 
+
+NuFormula(Number,Operator,Number)
+
+# Operator Not Equal To
+
+10<>20
+
+===> 
+
+NuFormula(Number,Operator,Number)
 
 # operations
 
@@ -55,3 +175,11 @@ AVERAGE(10*(100-{aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa})/100,IF(10>40,"TRUE","FAL
 ===> 
 
 NuFormula(Keyword, ArgList( Number, Operator, "(", Number, Operator, Item ")", Operator, Number, Comma, Keyword, ArgList( Number, Operator, Number, Comma, String, Comma, String )))
+
+# CONCATfunction
+
+CONCAT(10,"TRUE",{aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa})
+
+===> 
+
+NuFormula(Keyword, ArgList( Number, Comma, String, Comma, Item ))
