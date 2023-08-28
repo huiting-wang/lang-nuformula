@@ -1,4 +1,46 @@
 {
+  "validOperator":[
+    {
+      "text": "10+3",
+      "result": null
+    },
+    {
+      "text": "10-3",
+      "result": null
+    },
+    {
+      "text": "10*3",
+      "result": null
+    },
+    {
+      "text": "10/3",
+      "result": null
+    },
+    {
+      "text": "10>3",
+      "result": null
+    },
+    {
+      "text": "10>=3",
+      "result": null
+    },
+    {
+      "text": "10<3",
+      "result": null
+    },
+    {
+      "text": "10<=3",
+      "result": null
+    },
+    {
+      "text": "10=3",
+      "result": null
+    },
+    {
+      "text": "10<>3",
+      "result": null
+    }
+  ],
   "invalidItem": [
     {
       "text": "{input-1ee3015f-0c65-6fea-b872-0242a3ee6533}",

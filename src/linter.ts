@@ -29,6 +29,7 @@ enum ERROR {
   syntaxError, // ---------- 語法錯誤
 }
 
+// 註冊所有可接受的字符的正規表達式
 const SYNTAX_empty = `^$`; // ----------------- 空字串
 const SYNTAX_comma = `(,)`; // ---------------- 逗號 ,
 const SYNTAX_slash = `(\\\\)`; // ------------- 反斜線 \
@@ -63,7 +64,7 @@ const SYNTAX_sign = `(${SYNTAX_plus}|${SYNTAX_minus})`;
 const SYNTAX_arith = `(${SYNTAX_time}|${SYNTAX_divide})`;
 // 布林比較符號
 const SYNTAX_bool = `(${SYNTAX_equal}|${SYNTAX_gt}|${SYNTAX_lt})`;
-// 願算子符號
+// 運算子符號
 const SYNTAX_operator = `(${SYNTAX_sign}|${SYNTAX_arith}|${SYNTAX_bool})`;
 
 // 是否為一個參數的合法開頭

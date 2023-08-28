@@ -3,6 +3,7 @@
   function,
   commaSep,
   String,
+  Number,
   Operator,
   valueOp @left
 }
@@ -26,7 +27,7 @@ commaSep<value> { (value (Comma value)*)? }
 
 @tokens {
 
-  Operator { $[+\-*/] | "<" | ">" | "<=" | ">=" | "=" | "<>" }
+  Operator { $[+\-*/<>=] | "<=" | ">=" | "<>" }
 
   Keyword { @asciiUppercase+ }
 
@@ -35,7 +36,7 @@ commaSep<value> { (value (Comma value)*)? }
   esc  { $["\\\/bfnrt] | "u" hex hex hex hex }
   hex  { $[0-9a-fA-F] }
 
-  Number { ("+" | "-")? (@digit+ ("." @digit*)? | "." @digit+) }
+  Number { (@digit+ ("." @digit*)?) }
 
   @precedence { Operator, Number }
 
