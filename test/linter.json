@@ -60,7 +60,7 @@
         "from": 0,
         "to": 23,
         "severity": "error",
-        "message": "無效的項目元件"
+        "message": "存在無效的變數"
       }
     },
     {
@@ -69,7 +69,7 @@
         "from": 37,
         "to": 38,
         "severity": "error",
-        "message": "無效的項目元件"
+        "message": "存在無效的變數"
       }
     }
   ],

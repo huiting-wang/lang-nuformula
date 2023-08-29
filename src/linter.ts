@@ -359,7 +359,7 @@ class NuLinter {
           from: fromPos(pos),
           to: toPos(pos + length),
           severity: "error",
-          message: `無效的項目元件`,
+          message: `存在無效的變數`,
         };
       // 缺少標示符
       case ERROR.missingOperator:
