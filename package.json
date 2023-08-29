@@ -1,6 +1,6 @@
 {
   "name": "codemirror-lang-nuformula",
-  "version": "0.2.37",
+  "version": "0.2.38",
   "description": "EXAMPLE language support for CodeMirror",
   "scripts": {
     "test": "mocha test/test.js",
