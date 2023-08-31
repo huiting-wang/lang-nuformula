@@ -1,4 +1,4 @@
-import { truncateMaxNumber, isNumber, isEmptyValue } from "./utils";
+import {  isNumber, isEmptyValue } from "./utils";
 import { NuEvaluationLib } from "./evaluation-lib";
 import { Item, opType, argType, widgetType } from "./constants";
 
@@ -60,49 +60,55 @@ class FormulaEvaluation {
       scopedData: { [key: string]: any },
       row?: string
     ): string | number => {
-      // postfix 佇列
-      let stack = [...postfixStack] as Argument[];
-      // 運算元佇列
-      let operandStack = [] as Argument[];
-      // 引數佇列
-      let argumentStack = [] as any[];
-      // 暫存計算結果
-      let evaResult = "" as any;
+      try {
+        // postfix 佇列
+        let stack = [...postfixStack] as Argument[];
+        // 運算元佇列
+        let operandStack = [] as Argument[];
+        // 引數佇列
+        let argumentStack = [] as any[];
+        // 暫存計算結果
+        let evaResult = "" as any;
 
-      // 掃描 postfix 表達式
-      while (!isEmptyValue(stack)) {
-        const currentArg = stack.shift() as Argument;
-        // 每當遇到運算元時，將其推入 stack
-        if (currentArg.op === opType.operand) {
-          operandStack.push(currentArg);
-        }
-        // 每當遇到運算子
-        else if (currentArg.argCount) {
-          // 從 postfix 佇列中 pop 出所需數量個運算元，push 進運算子引數佇列
-          argumentStack = [];
-          for (let i = 0; i < currentArg.argCount; i++) {
-            const operand = operandStack.pop();
-            if (operand)
-              argumentStack.unshift(
-                this.getValue(operand, scopedData, assignTarget, row)
-              );
+        // 掃描 postfix 表達式
+        while (!isEmptyValue(stack)) {
+          const currentArg = stack.shift() as Argument;
+          // 每當遇到運算元時，將其推入 stack
+          if (currentArg.op === opType.operand) {
+            operandStack.push(currentArg);
           }
-          // 將這些運算元與運算子進行運算
-          evaResult =
-            NuEvaluationLib[currentArg.value as keyof typeof NuEvaluationLib](
-              argumentStack
-            );
-          // 將結果再次推回 postfix 佇列
-          operandStack.push({
-            op: opType.operand,
-            type: isNumber(evaResult) ? argType.number : "",
-            value: evaResult,
-          });
+          // 每當遇到運算子
+          else if (currentArg.argCount) {
+            // 從 postfix 佇列中 pop 出所需數量個運算元，push 進運算子引數佇列
+            argumentStack = [];
+            for (let i = 0; i < currentArg.argCount; i++) {
+              const operand = operandStack.pop();
+              if (operand)
+                argumentStack.unshift(
+                  this.getValue(operand, scopedData, assignTarget, row)
+                );
+            }
+            // 將這些運算元與運算子進行運算
+            evaResult =
+              NuEvaluationLib[currentArg.value as keyof typeof NuEvaluationLib](
+                argumentStack
+              );
+            // 將結果再次推回 postfix 佇列
+            operandStack.push({
+              op: opType.operand,
+              type: isNumber(evaResult) ? argType.number : "",
+              value: evaResult,
+            });
+          }
         }
-      }
 
-      // 輸出計算結果
-      return operandStack.pop()?.value ?? "";
+        // 輸出計算結果
+        return operandStack.pop()?.value ?? "";
+      } catch (error) {
+        // 計算錯誤
+        console.warn("[Formula]: calculation failed.", error)
+        return "";
+      }
     };
   }
 
@@ -127,7 +133,7 @@ class FormulaEvaluation {
         return removeQuotation(arg.value);
       // 數字
       case argType.number:
-        return truncateMaxNumber(arg.value);
+        return Number(arg.value)
       // 表單元件
       case argType.item:
         return this.getItemValue(arg, formData, assignTarget, row);
@@ -155,6 +161,8 @@ class FormulaEvaluation {
     const targetIsColumn = !assignTarget
       ? false
       : (this.formItems[assignTarget] as Item)?.column;
+
+    if (!formItem) throw new Error("Form Item Not Found.");
 
     switch (true) {
       // = 合計欄位
@@ -243,7 +251,7 @@ class FormulaEvaluation {
         return removeQuotation(data);
       // 數字元件
       case widgetType.number:
-        return truncateMaxNumber(data);
+        return Number(data);
       // 單選
       case widgetType.radio:
         return this.findStringOptionLabel(itemSn, data);
