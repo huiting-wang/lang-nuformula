@@ -546,6 +546,8 @@ ex `="這是一個字串"+({1eddd92e-5ef6-6f4c-877d-0242994894d2}+SUM(2,3,4))`
 - 表單元件
 - 格式: 用「大括號」標記前後，中間是 uuid 格式的元件序號，`{item-sn}`
   - ex `{1eddd92e-5ef6-6f4c-877d-0242994894d2}`
+  - ex `{1eddd92e-5ef6-6f4c-877d-0242994894d2-sum}` (子表合計欄位)
+  - ex `{input-1eddd92e-5ef6-6f4c-877d-0242994894d2}` (尚未儲存的欄位)
 - type: `ARG_TYPE.item`
 - op: `"operand"`
 - value: 表單元件的序號 (`string`)
@@ -563,8 +565,7 @@ ex `="這是一個字串"+({1eddd92e-5ef6-6f4c-877d-0242994894d2}+SUM(2,3,4))`
 - type: `ARG_TYPE.function`
 - op: `"operator"`
 - 格式: `大寫字母( ... )`，其中若有 arguments，用 `,` 分開
-  - ex: `SUM(` `)`, `AVERAGE(` `)`, `IF(` `)`, `=(` `)`
-  - 
+  - ex: `SUM()`, `AVERAGE()`,`CONCAT()`, `IF()`, `=()`
 
 
 ### Output (輸出介面)
@@ -693,6 +694,13 @@ ex `="這是一個字串"+({1eddd92e-5ef6-6f4c-877d-0242994894d2}+SUM(2,3,4))`
   - op: `"operator"`
   - 可接受的 argument 數量：3
   - value: `if`
+  - weight: -
+- `CONCAT` 
+  - 合併多個指定欄位內的所有文字
+  - type: `ARG_TYPE.function`
+  - op: `"operator"`
+  - 可接受的 argument 數量：n
+  - value: `concat`
   - weight: -
 - 其他 function 格式 (`大寫英文字母 + ( ... )`)
   - type: `ARG_TYPE.function`

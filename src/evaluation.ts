@@ -1,4 +1,4 @@
-import {  isNumber, isEmptyValue } from "./utils";
+import { truncateMaxNumber, isNumber, isEmptyValue } from "./utils";
 import { NuEvaluationLib } from "./evaluation-lib";
 import { Item, opType, argType, widgetType } from "./constants";
 
@@ -133,7 +133,7 @@ class FormulaEvaluation {
         return removeQuotation(arg.value);
       // 數字
       case argType.number:
-        return Number(arg.value)
+        return truncateMaxNumber(arg.value)
       // 表單元件
       case argType.item:
         return this.getItemValue(arg, formData, assignTarget, row);
@@ -162,7 +162,7 @@ class FormulaEvaluation {
       ? false
       : (this.formItems[assignTarget] as Item)?.column;
 
-    if (!formItem) throw new Error("Form Item Not Found.");
+    if (!formItem) throw new Error(`Form Item Not Found: ${arg.value}`);
 
     switch (true) {
       // = 合計欄位
@@ -251,7 +251,7 @@ class FormulaEvaluation {
         return removeQuotation(data);
       // 數字元件
       case widgetType.number:
-        return Number(data);
+        return truncateMaxNumber(data);
       // 單選
       case widgetType.radio:
         return this.findStringOptionLabel(itemSn, data);
