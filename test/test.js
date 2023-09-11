@@ -14,8 +14,6 @@ import { testFormItems, testFormData } from "./form-data.js";
 // 格式化表單項目
 const formItems = formatFormItems(testFormItems)
 
-console.log(formItems)
-
 // 測試 lezer grammar
 let languageTestCase = "language.txt";
 let languageTest = path.join(

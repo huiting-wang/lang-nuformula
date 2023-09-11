@@ -25,8 +25,6 @@
       - [輸出格式：](#輸出格式)
       - [operand 類型分析](#operand-類型分析-1)
       - [operator 類型分析](#operator-類型分析-1)
-  - [維護指引](#維護指引)
-    - [如何擴充一個公式](#如何擴充一個公式)
 
 
 ## 說明
@@ -89,7 +87,7 @@
 | --- | --- | --- | --- |
 | `number` 數字 | `number` | 數字類型運算元，可以進行四則運算 | `200` |
 | `constant` 常數字串 | `string` | 純字串的運算元，前後需以 `"` 標示 | `"這是一個字串"` |
-| `item` 表單元件 | 返回該表單元件的填寫值 | 若要取用 A元件 的填寫值，前後需以大括號 `{}` 標示，中間為 uuid 格式的元件序號： `{元件A的序號}`。 | `{9b1a9a3f-94ff-41af-9736-694cbd6b4ca2}` |
+| `item` 表單元件 | 返回該表單元件的填寫值 | 若要取用 A元件 的填寫值，前後需以大括號 `{}` 標示，中間為 uuid 格式的元件序號： `{元件A的序號}`。<br>• 子表合計欄位：`{uuid-sum}`<br>• 尚未儲存的欄位：`{type-uuid}` | `{9b1a9a3f-94ff-41af-9736-694cbd6b4ca2}`<br>`{9b1a9a3f-94ff-41af-9736-694cbd6b4ca2-sum}`<br>`{input-9b1a9a3f-94ff-41af-9736-694cbd6b4ca2}` |
 
 ### 輸入輸出需求
 
@@ -169,7 +167,7 @@ const postfixStack = getPostfixStackFromApi(formula);
 
 // 取得公式計算方法
 const evaMethod = nuformulaEvaluation.getEvaluation(
-  postfix,
+  postfixStack,
   assignTarget,
 );
 
@@ -901,46 +899,6 @@ output = [
     },
 ]
 ```
-
----
-
-
-## 維護指引
-
-
-### 如何擴充一個公式
-
-假設我們要新增一個函式 `AND`：如果所有引數為 TRUE，則傳回 TRUE
-
-1. 到 `/src/constants.js` 中，在 `func` 中新增一個 `AND` 的唯一鍵值
-   ```javascript
-   // 可用函式
-    export enum funcName {
-        ...
-        AND = "and", // ----------- 判斷測試中是否所有條件皆為 TRUE
-    }
-   ```
-2. 到 `evaluation-lib.js` 中，以剛剛宣告的鍵值 `funcName.AND` 為鍵值，實作 `AND` 函數的邏輯
-   ```javascript
-   export default = {
-    ...
-    /**
-    * AND，使用 AND 函數 (邏輯函數之一) 來判斷測試中是否所有條件皆為 TRUE。
-    *
-    * @param {Array} args - 參數
-    * @returns {boolean} 如果所有引數為 TRUE，則傳回 TRUE
-    * @description
-    *  - 範例: =SUM(boolean1, [boolean2], ...)
-    *  - 接受參數數量: n
-    */
-    [funcName.AND]: (args) => {
-        return args.reduce((output, arg)=> output && arg, true)
-    },
-   };
-   ```
-
-
-
 
 ---
 
