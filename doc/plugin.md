@@ -82,6 +82,9 @@
 
 ## autocomplete 關鍵字輸入插件
 用途：鍵入字符時，以下拉選單的方式展開可使用的關鍵字選單
+
+<img src="./assests/plugin-autocomplete.gif" alt="plugin-autocomplete" style="width: 100%" />
+
 ### 使用方式
 ```javascript
 EditorState.create({
@@ -121,6 +124,9 @@ type: [Extension](https://codemirror.net/docs/ref/#state.Extension)
 
 ## highlight 編輯器高亮插件
 用途：定義編輯器字符的分類與顏色樣式
+
+<img src="./assests/plugin-highlight.png" alt="plugin-highlight" style="width:100%" />
+
 ### 使用方式
 ```javascript
 EditorState.create({
@@ -140,6 +146,9 @@ type: [Extension](https://codemirror.net/docs/ref/#state.Extension)
 
 ## Item Widget 表單元件項目替換標籤插件
 用途：將編輯器中符合元件項目 `{`uuid sn`}` 的字串替換成元件標籤 `<span>`
+
+<img src="./assests/plugin-item-widget.png" alt="plugin-item-widget" style="width:100%" >
+
 ### 使用方式
 ```javascript
 EditorState.create({
@@ -166,6 +175,9 @@ type: [viewPlugin](https://codemirror.net/docs/ref/#view.ViewPlugin)
 
 ## linter 語法檢查插件
 用途：定義公式驗證規則，並顯示錯誤提示
+
+<img src="./assests/plugin-linter.gif" alt="plugin-linter" style="width: 100%" />
+
 ### 使用方式
 ```javascript
 EditorState.create({

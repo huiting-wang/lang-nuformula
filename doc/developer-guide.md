@@ -27,6 +27,9 @@
       - [在 `NuLinter` 類型中，擴充 constructor](#在-nulinter-類型中擴充-constructor)
       - [在 `NuLinter` 類型中，擴充 reset 方法](#在-nulinter-類型中擴充-reset-方法)
       - [在 `NuLinter` 類型中，擴充 verify 方法](#在-nulinter-類型中擴充-verify-方法)
+  - [如何擴充一種元件為可用變數](#如何擴充一種元件為可用變數)
+    - [註冊元件](#註冊元件)
+    - [擴充對應的元件取值方法](#擴充對應的元件取值方法)
 - [補充提醒](#補充提醒)
 
 ## 如何擴充一個運算子
@@ -630,6 +633,81 @@ private meetSystem(pos: number) {
 ```
 
 最後，需要擴充公式函式庫，確保在解析系統參數時，可以帶入正確的數值。這部分需要擴充 `getValue` 函式。
+
+## 如何擴充一種元件為可用變數
+現在可以被當作可用變數的元件有：
+- 單行輸入(`input`)
+- 多行輸入(`textarea`)
+- 數字(`number`)
+- 單選(`radio`)
+- 複選(`checkbox`)
+- 下拉單選(`select`)
+- 下拉複選(`select_multiple`)
+
+其中，各種元件的綁定值和實際上進行公式的運算值可會有不同。
+
+單行文字、多行輸入、數字等元件，它們的表單填寫綁定值和公式運算值是一樣的，例如：`"這是單行文字"`、`"這是多行文字"`、`100`。
+
+不過，單選、複選、下拉單選、下拉複選的兩個值卻不一樣，舉單選為例：假設單選有一個選項為
+```json
+{
+  "value": "radio-value",
+  "label": "這是一個單選選項"
+}
+```
+這是，表單填寫綁定值為 `"radio-value"`，但是公式運算值卻定義為 `"這是一個單選選項"`。
+> TODO 考慮單、複選的「其他選項」
+
+以上提到的元件值對應，整理在以下方法：
+> file "/src/evaluation.ts"
+
+```js
+/**
+ * 取得個別元件格式化後的填寫值
+ *
+ * @internal
+ * @param {string} type - 元件類型
+ * @param {string} itemSn - 元件序號
+ * @param {any} data - 元件填寫值
+ * @returns {any} 元件計算格式
+ */
+getFormattedValue(type: string, itemSn: string, data: any){}
+```
+
+以下我們擴充「時間日期單日」元件。
+
+### 註冊元件
+> file: `/src/constants.ts`
+
+```diff
+// 可用表單項目類型字串
+export enum widgetType {
++ datetime = "datetime", // ----------------- 時間日期單日
+}
+```
+
+### 擴充對應的元件取值方法
+
+```js
+/**
+ * 取得個別元件格式化後的填寫值
+ *
+ * @internal
+ * @param {string} type - 元件類型
+ * @param {string} itemSn - 元件序號
+ * @param {any} data - 元件填寫值
+ * @returns {any} 元件計算格式
+ */
+getFormattedValue(type: string, itemSn: string, data: any) {
+  switch (type) {
+    // 時間日期單日元件
+    case widgetType.datetime:
+      return data;
+  }
+}
+```
+
+最後，要注意這個元件在 `evaluation-lib` 中，對各種運算子或函數的運算邏輯。建議在擴充元件時，也要順帶將測試腳本完成。
 
 # 補充提醒
 以上的範例僅供參考，需實際操作之後，因應不同狀況進行調整。強烈建議參考 [CodeMirror 官方說明文件](https://codemirror.net/)。
