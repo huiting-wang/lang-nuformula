@@ -572,6 +572,9 @@ class NuLinter {
     // 下一字符是否為一個函式的合法結尾
     if (!isSyntax(SYNTAX_end_of_func, this.nextChar))
       throwError({ message: ERROR.invalidFuncName, pos: pos + 1 });
+    // 上一字符是否為一個函式的合法开头
+    if (!isSyntax(SYNTAX_upper_case, this.prevChar) && !isSyntax(SYNTAX_lead_to_arg, this.prevChar))
+      throwError({ message: ERROR.missingOperator, pos: pos - 1 });
     this.funcName += this.char;
   }
 
