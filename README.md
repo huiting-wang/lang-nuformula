@@ -1,11 +1,5 @@
 # 公式編輯 CodeMirror 6 language package template
 
-```
-日期：2023-07-21
-規劃：Chien Lo
-版本號：0.2
-```
-
 > - 建置：`npm run prepare`
 > - 測試：`npm test`
 > - 展示站：[`https://yun-chien-lo.github.io/lang-nuformula/`](https://yun-chien-lo.github.io/lang-nuformula/)
